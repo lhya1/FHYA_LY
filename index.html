@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FHYA (@fhya.planet) • Petit Planet Creator</title>
+  <title>FHYA (@fhya.planet) • Petit Planet Creator Studio</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Fonts: Quicksand, Nunito y Great Vibes para caligrafía -->
@@ -12,6 +12,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Nunito:wght@500;600;700;800;900&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
   <!-- Font Awesome para iconos limpios -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Tone.js para melodía cósmica cozy integrada -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
 
   <style>
     :root {
@@ -34,13 +36,13 @@
       font-family: 'Nunito', 'Quicksand', sans-serif;
       margin: 0;
       min-height: 100vh;
-      background: linear-gradient(135deg, #2568b8 0%, #4b94e0 38%, #85bdf2 72%, #c9e3fb 100%);
+      background: linear-gradient(135deg, #1f5fa8 0%, #3d88db 36%, #7ab8f2 72%, #cce6fc 100%);
       color: #ffffff;
       overflow-x: hidden;
       position: relative;
     }
 
-    /* Franja lateral izquierda sutil como en el diseño original */
+    /* Franja lateral izquierda translúcida fiel al diseño original */
     body::before {
       content: "";
       position: fixed;
@@ -48,7 +50,7 @@
       left: 0;
       width: 18%;
       height: 100%;
-      background: linear-gradient(180deg, rgba(16, 67, 134, 0.45) 0%, rgba(25, 86, 163, 0.28) 100%);
+      background: linear-gradient(180deg, rgba(13, 55, 114, 0.48) 0%, rgba(25, 86, 163, 0.24) 100%);
       z-index: 0;
       pointer-events: none;
     }
@@ -57,49 +59,71 @@
       font-family: 'Great Vibes', cursive;
     }
 
-    /* Animaciones Cósmicas y de Personajes */
+    /* =========================================================
+       KEYFRAMES DE ANIMACIÓN ORGÁNICA Y CÓSMICA (PETIT PLANET)
+       ========================================================= */
     @keyframes floatSlow {
       0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-10px) rotate(1.5deg); }
+      50% { transform: translateY(-9px) rotate(1.2deg); }
     }
 
     @keyframes floatReverse {
       0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(8px) rotate(-2deg); }
+      50% { transform: translateY(7px) rotate(-1.8deg); }
     }
 
     @keyframes twinkle {
       0%, 100% { opacity: 0.25; transform: scale(0.85); }
-      50% { opacity: 1; transform: scale(1.15); }
-    }
-
-    @keyframes orbitSpin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+      50% { opacity: 1; transform: scale(1.18); }
     }
 
     @keyframes gentleBounce {
       0%, 100% { transform: translateY(0) scaleY(1); }
-      45% { transform: translateY(-7px) scaleY(1.03); }
-      55% { transform: translateY(-7px) scaleY(1.03); }
-      95% { transform: translateY(0) scaleY(0.96); }
+      45% { transform: translateY(-8px) scaleY(1.04); }
+      55% { transform: translateY(-8px) scaleY(1.04); }
+      95% { transform: translateY(0) scaleY(0.95); }
     }
 
     @keyframes blinkEyes {
       0%, 92%, 100% { transform: scaleY(1); }
-      96% { transform: scaleY(0.1); }
+      96% { transform: scaleY(0.08); }
     }
 
-    @keyframes pulseGlow {
-      0%, 100% { box-shadow: 0 0 18px rgba(255, 228, 132, 0.35); }
-      50% { box-shadow: 0 0 32px rgba(255, 255, 255, 0.65); }
+    @keyframes hairSway {
+      0%, 100% { transform: skewX(0deg) rotate(0deg); }
+      50% { transform: skewX(-1.8deg) rotate(-1deg); }
     }
 
     @keyframes heartBeat {
       0%, 100% { transform: scale(1); }
-      25% { transform: scale(1.08); }
-      45% { transform: scale(0.98); }
-      65% { transform: scale(1.06); }
+      25% { transform: scale(1.1); }
+      45% { transform: scale(0.96); }
+      65% { transform: scale(1.07); }
+    }
+
+    @keyframes slowOrbitSpin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes astralDrift {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-6px) rotate(2deg); }
+    }
+
+    @keyframes cloudGlide {
+      0%, 100% { transform: translateX(0px); }
+      50% { transform: translateX(6px); }
+    }
+
+    @keyframes vinylSpin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes eqBar {
+      0%, 100% { transform: scaleY(0.35); }
+      50% { transform: scaleY(1); }
     }
 
     .animate-float {
@@ -128,53 +152,100 @@
       transform-origin: center;
     }
 
+    .animate-hair-sway {
+      animation: hairSway 4s ease-in-out infinite;
+      transform-origin: top center;
+    }
+
     .animate-heartbeat {
-      animation: heartBeat 2.4s ease-in-out infinite;
+      animation: heartBeat 2.2s ease-in-out infinite;
+      transform-origin: center;
+    }
+
+    .animate-orbit-spin {
+      animation: slowOrbitSpin 22s linear infinite;
+      transform-origin: center;
+    }
+
+    .animate-astral-drift {
+      animation: astralDrift 4.8s ease-in-out infinite;
+      transform-origin: center;
+    }
+
+    .animate-cloud-glide {
+      animation: cloudGlide 5.5s ease-in-out infinite;
+    }
+
+    .animate-vinyl {
+      animation: vinylSpin 7s linear infinite;
+    }
+
+    .vinyl-paused {
+      animation-play-state: paused;
+    }
+
+    .eq-bar {
+      transform-origin: bottom;
+      animation: eqBar 0.9s ease-in-out infinite;
     }
 
     /* Tarjetas estilo Bento */
-    .bento-card {
-      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
-    }
-
-    .bento-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 18px 36px -10px rgba(15, 58, 118, 0.35);
+      box-shadow: 0 20px 40px -12px rgba(13, 52, 108, 0.42);
     }
 
     .hero-card {
-      background: linear-gradient(135deg, #3c88db 0%, #4897ea 55%, #67b0f5 100%);
-      box-shadow: 0 16px 38px rgba(17, 63, 126, 0.28);
-      border: 1.5px solid rgba(255, 255, 255, 0.28);
+      background: linear-gradient(135deg, #3783d6 0%, #4897ea 52%, #6cb4f7 100%);
+      box-shadow: 0 18px 42px rgba(15, 58, 118, 0.32), inset 0 1px 1px rgba(255, 255, 255, 0.45);
+      border: 1.5px solid rgba(255, 255, 255, 0.32);
     }
 
     .white-bento {
-      background: rgba(255, 255, 255, 0.96);
+      background: rgba(255, 255, 255, 0.97);
       border: 3.5px solid #59a2ea;
       color: var(--navy-text);
-      box-shadow: 0 12px 28px rgba(18, 69, 136, 0.18);
+      box-shadow: 0 14px 32px rgba(18, 69, 136, 0.2);
     }
 
     .blue-bento {
-      background: linear-gradient(145deg, #4390e0 0%, #3781d1 100%);
-      border: 3px solid rgba(255, 255, 255, 0.22);
-      box-shadow: 0 12px 28px rgba(18, 69, 136, 0.22);
+      background: linear-gradient(145deg, #4390e0 0%, #327bc9 100%);
+      border: 3px solid rgba(255, 255, 255, 0.26);
+      box-shadow: 0 14px 32px rgba(18, 69, 136, 0.25);
     }
 
-    /* Scrollbar personalizada */
+    .shimmer-btn {
+      position: relative;
+      overflow: hidden;
+    }
+    .shimmer-btn::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 45%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+      transform: translateX(-140%) skewX(-20deg);
+    }
+    .shimmer-btn:hover::after {
+      animation: shimmerSweep 0.85s ease forwards;
+    }
+
     ::-webkit-scrollbar {
       width: 8px;
     }
     ::-webkit-scrollbar-track {
-      background: #2b70c2;
+      background: #2464b2;
     }
     ::-webkit-scrollbar-thumb {
-      background: #8cc5fa;
+      background: #92c8fb;
       border-radius: 999px;
     }
   </style>
 </head>
 <body class="antialiased selection:bg-sky-200 selection:text-sky-900">
+
+  <!-- CANVAS CÓSMICO INTERACTIVO DE FONDO (PARTÍCULAS Y ESTRELLAS FUGACES) -->
+  <canvas id="cosmic-canvas" class="fixed inset-0 w-full h-full pointer-events-none z-0"></canvas>
 
   <!-- FONDO DECORATIVO CÓSMICO Y DE PETIT PLANET -->
   <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
@@ -184,7 +255,7 @@
       <span class="block text-5xl sm:text-6xl ml-16 -mt-3">Starlight</span>
     </div>
 
-    <!-- Planeta gigante translúcido de fondo (estilo ilustración de fondo) -->
+    <!-- Planeta gigante translúcido de fondo -->
     <svg class="absolute -right-24 -top-16 w-[520px] h-[520px] sm:w-[680px] sm:h-[680px] opacity-20 animate-float-reverse" viewBox="0 0 600 600" fill="none">
       <circle cx="320" cy="280" r="190" fill="url(#bgPlanetGrad)" />
       <ellipse cx="320" cy="285" rx="285" ry="62" transform="rotate(-18 320 285)" stroke="#ffffff" stroke-width="14" stroke-dasharray="28 14" />
@@ -207,68 +278,54 @@
     </svg>
 
     <!-- Destellos de 4 puntas flotantes -->
-    <svg class="absolute top-24 right-[26%] w-12 h-12 text-amber-200/70 animate-twinkle" viewBox="0 0 40 40" fill="currentColor">
+    <svg class="absolute top-24 right-[26%] w-12 h-12 text-amber-200/75 animate-twinkle" viewBox="0 0 40 40" fill="currentColor">
       <path d="M20 0 C21 13, 27 19, 40 20 C27 21, 21 27, 20 40 C19 27, 13 21, 0 20 C13 19, 19 13, 20 0 Z" />
     </svg>
-    <svg class="absolute top-44 right-[22%] w-7 h-7 text-white/60 animate-twinkle-delay" viewBox="0 0 40 40" fill="currentColor">
+    <svg class="absolute top-44 right-[22%] w-7 h-7 text-white/65 animate-twinkle-delay" viewBox="0 0 40 40" fill="currentColor">
       <path d="M20 0 C21 13, 27 19, 40 20 C27 21, 21 27, 20 40 C19 27, 13 21, 0 20 C13 19, 19 13, 20 0 Z" />
     </svg>
-    <svg class="absolute bottom-28 left-[8%] w-10 h-10 text-amber-100/60 animate-twinkle" viewBox="0 0 40 40" fill="currentColor">
+    <svg class="absolute bottom-28 left-[8%] w-10 h-10 text-amber-100/65 animate-twinkle" viewBox="0 0 40 40" fill="currentColor">
       <path d="M20 0 C21 13, 27 19, 40 20 C27 21, 21 27, 20 40 C19 27, 13 21, 0 20 C13 19, 19 13, 20 0 Z" />
     </svg>
   </div>
 
   <!-- CONTENEDOR PRINCIPAL CENTRADO ESTILO CARRD -->
-  <main class="relative z-10 max-w-[820px] mx-auto px-4 sm:px-6 pt-6 pb-14">
+  <main class="relative z-10 max-w-[840px] mx-auto px-4 sm:px-6 pt-6 pb-14">
 
     <!-- 1. BARRA DE NAVEGACIÓN SUPERIOR -->
     <header class="flex flex-wrap items-center justify-between gap-3 mb-7 sm:mb-8">
       <!-- Perfil de FHYA a la izquierda -->
-      <div class="flex items-center gap-3 group cursor-pointer" onclick="openProfileModal()">
+      <div class="flex items-center gap-3 group cursor-pointer" onclick="playChime('soft'); openProfileModal()">
         <div class="relative">
-          <!-- Avatar circular SVG ilustrado estilo Petit Planet -->
-          <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-sky-200 via-indigo-100 to-white p-0.5 shadow-md ring-2 ring-white/70 overflow-hidden transition-transform duration-300 group-hover:scale-105">
+          <!-- Avatar circular SVG ilustrado con acabado profesional -->
+          <div class="w-12 h-12 sm:w-[52px] sm:h-[52px] rounded-full bg-gradient-to-tr from-sky-300 via-indigo-100 to-white p-0.5 shadow-md ring-2 ring-white/85 overflow-hidden transition-transform duration-300 group-hover:scale-105">
             <svg viewBox="0 0 100 100" class="w-full h-full">
-              <circle cx="50" cy="50" r="50" fill="#d9ecff"/>
-              <!-- Estrellitas fondo avatar -->
-              <circle cx="20" cy="25" r="2.5" fill="#ffd966"/>
-              <circle cx="80" cy="22" r="2" fill="#ffffff"/>
-              <!-- Cabello trasero -->
-              <path d="M24 55 C20 30, 80 30, 76 55 C78 75, 68 85, 50 85 C32 85, 22 75, 24 55 Z" fill="#89b6f0"/>
-              <!-- Rostro -->
-              <circle cx="50" cy="54" r="21" fill="#fff2eb"/>
-              <!-- Mejillas -->
-              <ellipse cx="39" cy="60" rx="3.5" ry="2" fill="#ff9eb5" opacity="0.7"/>
-              <ellipse cx="61" cy="60" rx="3.5" ry="2" fill="#ff9eb5" opacity="0.7"/>
-              <!-- Ojos grandes anime -->
-              <ellipse cx="42" cy="54" rx="3.2" ry="4.5" fill="#255499"/>
-              <ellipse cx="58" cy="54" rx="3.2" ry="4.5" fill="#255499"/>
-              <circle cx="41" cy="52.5" r="1.3" fill="#ffffff"/>
-              <circle cx="57" cy="52.5" r="1.3" fill="#ffffff"/>
-              <!-- Sonrisa -->
-              <path d="M47 62 Q50 65 53 62" stroke="#d97b84" stroke-width="2" stroke-linecap="round" fill="none"/>
-              <!-- Flequillo pastel -->
-              <path d="M28 50 C30 28, 70 28, 72 50 C64 42, 56 46, 50 38 C44 46, 36 42, 28 50 Z" fill="#f0f7ff"/>
-              <!-- Boina estelar Petit Planet -->
-              <ellipse cx="54" cy="31" rx="22" ry="9" transform="rotate(-10 54 31)" fill="#3b82d6"/>
-              <path d="M62 24 L64 28 L68 29 L64 31 L63 35 L60 31 L56 30 L60 28 Z" fill="#ffe484"/>
-            </svg>
-          </div>
-          <!-- Punto verde "Online / Creando" -->
-          <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-lime-400 border-2 border-sky-700 rounded-full animate-pulse" title="Online en Petit Planet"></span>
-        </div>
-
-        <div>
-          <div class="flex items-center gap-1.5">
-            <h1 class="font-extrabold text-base sm:text-lg tracking-tight text-white drop-shadow-sm">FHYA</h1>
-            <span class="text-[11px] bg-white/25 backdrop-blur-sm px-2 py-0.5 rounded-full font-bold text-amber-100">@fhya.planet</span>
-          </div>
-          <p class="text-[10px] sm:text-[11px] font-bold tracking-widest uppercase text-sky-100/90">
-            IG CREATOR • ESPAÑOL / EN
-          </p>
-        </div>
-      </div>
-
+              <defs>
+                <linearGradient id="avSky" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#7dd3fc"/>
+                  <stop offset="50%" stop-color="#bae6fd"/>
+                  <stop offset="100%" stop-color="#e0e7ff"/>
+                </linearGradient>
+                <linearGradient id="avHair" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#ffffff"/>
+                  <stop offset="50%" stop-color="#dbeafe"/>
+                  <stop offset="100%" stop-color="#7db4f5"/>
+                </linearGradient>
+                <radialGradient id="avEye" cx="50%" cy="62%" r="55%">
+                  <stop offset="0%" stop-color="#93c5fd"/>
+                  <stop offset="52%" stop-color="#2563eb"/>
+                  <stop offset="88%" stop-color="#1e3a8a"/>
+                  <stop offset="100%" stop-color="#0f172a"/>
+                </radialGradient>
+              </defs>
+              <circle cx="50" cy="50" r="50" fill="url(#avSky)"/>
+              <!-- Destellos -->
+              <path d="M19 19 L21 24 L26 26 L21 28 L19 33 L17 28 L12 26 L17 24 Z" fill="#fef08a"/>
+              <circle cx="82" cy="24" r="2" fill="#ffffff"/>
+              <!-- Cabello trasero sedoso -->
+              <path d="M18 58 C14 25, 86 25, 82 58 C84 80, 72 92, 50 92 C28 92, 16 80, 18 58 Z" fill="url(#avHair)" stroke="#4479c4" stroke-width="1.6"/>
+              <!-- Rostro dulce con mentón suave -->
+              <path d="M29 50 C29 33, 71 33, 71 50 C71 67, 60 77, 50 77 C40 77, 29 67, 29 50 Z" fill="#fff5ef" stroke="#d49a8e" stroke-width="1.2"/>
       <!-- Navegación de Pestañas tipo Píldora -->
       <nav class="flex items-center gap-1.5 sm:gap-2 bg-sky-900/20 backdrop-blur-md p-1.5 rounded-full border border-white/20">
         <button onclick="switchTab('home', this)" class="nav-pill px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold transition-all text-white/90 hover:text-white">
@@ -283,7 +340,52 @@
       </nav>
     </header>
 
-    <!-- 2. TARJETA HERO PRINCIPAL (BANNER SUPERIOR CON PERSONAJE SOBRESALIENTE) -->
+    <!-- REPRODUCTOR DE MÚSICA COZY DE PETIT PLANET (ESTILO MINI WIDGET BENTO) -->
+    <section class="mb-5">
+      <div class="bg-white/95 backdrop-blur-md border-[3px] border-sky-400 rounded-full px-3.5 py-2 shadow-lg flex items-center justify-between gap-3 text-[#16498a]">
+        <!-- Disco de vinilo estelar giratorio + título -->
+        <div class="flex items-center gap-3 min-w-0">
+          <div id="vinyl-disc" class="w-10 h-10 rounded-full bg-gradient-to-tr from-sky-600 via-indigo-500 to-sky-300 p-1.5 shadow-inner flex items-center justify-center shrink-0 animate-vinyl vinyl-paused border-2 border-sky-200">
+            <div class="w-3.5 h-3.5 rounded-full bg-amber-200 border-2 border-white"></div>
+          </div>
+
+          <div class="min-w-0">
+            <div class="flex items-center gap-1.5">
+              <span class="text-[10px] font-black uppercase tracking-wider bg-sky-100 text-sky-700 px-2 py-0.5 rounded-full">BGM</span>
+              <!-- Barras de ecualizador animadas -->
+              <div id="music-eq" class="flex items-end gap-0.5 h-3 opacity-40 transition-opacity">
+                <span class="w-0.5 h-3 bg-sky-500 rounded-full eq-bar" style="animation-delay: 0s"></span>
+                <span class="w-0.5 h-2.5 bg-indigo-500 rounded-full eq-bar" style="animation-delay: 0.2s"></span>
+                <span class="w-0.5 h-3 bg-sky-400 rounded-full eq-bar" style="animation-delay: 0.4s"></span>
+              </div>
+            </div>
+            <p id="track-title" class="text-xs sm:text-sm font-extrabold truncate text-[#16498a] mt-0.5">
+              Starlight Lullaby • Petit Planet OST
+            </p>
+          </div>
+        </div>
+
+        <!-- Controles: Play/Pause, Cambiar melodía y Subir MP3 propio -->
+        <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+          <button onclick="switchPresetTrack()" title="Cambiar melodía cósmica" class="w-8 h-8 rounded-full bg-sky-100 hover:bg-sky-200 text-sky-700 flex items-center justify-center text-xs transition-colors">
+            <i class="fa-solid fa-forward-step"></i>
+          </button>
+
+          <button id="music-play-btn" onclick="toggleMusic()" title="Reproducir / Pausar música" class="w-9 h-9 rounded-full bg-gradient-to-r from-sky-500 to-blue-600 hover:opacity-95 text-white flex items-center justify-center text-xs shadow-md transition-transform active:scale-95">
+            <i id="music-play-icon" class="fa-solid fa-play ml-0.5"></i>
+          </button>
+
+          <!-- Botón para subir tu propio archivo de música (.mp3, .wav, .ogg) -->
+          <label for="custom-audio-input" title="Subir tu propia canción (.mp3 / .wav)" class="cursor-pointer px-3 py-1.5 rounded-full bg-amber-100 hover:bg-amber-200 text-amber-800 font-extrabold text-[11px] flex items-center gap-1.5 transition-colors border border-amber-300">
+            <i class="fa-solid fa-music"></i>
+            <span class="hidden sm:inline">Tu MP3</span>
+          </label>
+          <input id="custom-audio-input" type="file" accept="audio/*" class="hidden" onchange="loadCustomAudio(event)" />
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. TARJETA HERO PRINCIPAL (BANNER SUPERIOR CON PERSONAJE ILUSTRADO PROFESIONAL) -->
     <section class="relative mb-6 sm:mb-7 pt-2">
       <div class="hero-card rounded-[28px] p-6 sm:p-8 md:p-9 relative overflow-visible">
         <!-- Brillo decorativo interno -->
@@ -310,121 +412,225 @@
               </p>
             </div>
 
-            <!-- Indicadores de Carrusel Interactivos (3 píldoras) -->
-            <div class="flex items-center gap-2.5 mt-5">
-              <button onclick="setHeroSlide(0)" aria-label="Slide 1" class="hero-dot h-2.5 w-10 rounded-full bg-white transition-all duration-300 shadow-sm"></button>
-              <button onclick="setHeroSlide(1)" aria-label="Slide 2" class="hero-dot h-2.5 w-8 rounded-full bg-white/40 hover:bg-white/70 transition-all duration-300"></button>
-              <button onclick="setHeroSlide(2)" aria-label="Slide 3" class="hero-dot h-2.5 w-8 rounded-full bg-white/40 hover:bg-white/70 transition-all duration-300"></button>
-              <span class="ml-2 text-[11px] font-bold text-sky-100/80 hidden sm:inline">Haz clic para explorar slides</span>
+            <!-- Indicadores de Carrusel Interactivos (3 píldoras) + Botón rápido IG -->
+            <div class="flex flex-wrap items-center justify-between gap-3 mt-5">
+              <div class="flex items-center gap-2.5">
+                <button onclick="playChime('tap'); setHeroSlide(0)" aria-label="Slide 1" class="hero-dot h-2.5 w-10 rounded-full bg-white transition-all duration-300 shadow-sm"></button>
+                <button onclick="playChime('tap'); setHeroSlide(1)" aria-label="Slide 2" class="hero-dot h-2.5 w-8 rounded-full bg-white/40 hover:bg-white/70 transition-all duration-300"></button>
+                <button onclick="playChime('tap'); setHeroSlide(2)" aria-label="Slide 3" class="hero-dot h-2.5 w-8 rounded-full bg-white/40 hover:bg-white/70 transition-all duration-300"></button>
+              </div>
+
+              <button onclick="playChime('soft'); openProfileModal()" class="shimmer-btn inline-flex items-center gap-1.5 bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/40 text-white text-xs font-extrabold px-3.5 py-1.5 rounded-full transition-all shadow-xs">
+                <i class="fa-brands fa-instagram text-sm text-amber-200"></i>
+                <span>Seguir @fhya.planet</span>
+              </button>
             </div>
           </div>
 
-          <!-- Ilustración Vectorial Animada de FHYA + Planeta Orbitando (Derecha sobresaliendo) -->
+          <!-- ILUSTRACIÓN PROFESIONAL DE FHYA (ESTILO ANIME / HOYOVERSE CEL-SHADED) -->
           <div class="md:col-span-5 relative flex justify-center md:justify-end mt-2 md:mt-0">
-            <div class="w-[240px] sm:w-[275px] md:w-[310px] md:-mt-16 md:-mb-9 md:-mr-4 animate-float select-none pointer-events-none">
-              <svg viewBox="0 0 340 330" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto drop-shadow-[0_14px_20px_rgba(16,58,117,0.32)]">
-                <!-- Aura circular pastel detrás del personaje -->
-                <circle cx="180" cy="175" r="115" fill="url(#heroAura)" opacity="0.45"/>
-
-                <!-- Anillo orbital trasero -->
-                <ellipse cx="175" cy="195" rx="145" ry="38" transform="rotate(-14 175 195)" stroke="#ffe484" stroke-width="3" stroke-dasharray="10 8" opacity="0.85"/>
-
-                <!-- Mini Planeta Cozy flotando a la izquierda -->
-                <g class="animate-float-reverse">
-                  <circle cx="56" cy="112" r="24" fill="url(#miniPlanetGrad)"/>
-                  <ellipse cx="56" cy="114" rx="38" ry="9" transform="rotate(-22 56 114)" stroke="#ffffff" stroke-width="3"/>
-                  <circle cx="49" cy="105" r="4" fill="#ffffff" opacity="0.6"/>
-                  <!-- Carita kawaii del planeta -->
-                  <circle cx="51" cy="113" r="1.8" fill="#1e4c8a"/>
-                  <circle cx="61" cy="113" r="1.8" fill="#1e4c8a"/>
-                  <path d="M54 116 Q56 118.5 58 116" stroke="#1e4c8a" stroke-width="1.5" stroke-linecap="round"/>
-                </g>
-
-                <!-- Antena/Mechón estelar (Ahoge) -->
-                <path d="M188 64 C194 34, 228 24, 240 44 C224 42, 206 50, 198 68" fill="#f5f9ff" stroke="#5a9be6" stroke-width="2.5"/>
-
-                <!-- Cabello trasero largo y esponjoso pastel -->
-                <path d="M112 155 C95 195, 92 255, 118 292 L248 292 C266 250, 260 185, 238 145 C220 90, 130 90, 112 155 Z" fill="url(#hairBackGrad)" stroke="#4c8ed9" stroke-width="2.5"/>
-
-                <!-- Suéter Cozy Oversized Celeste/Blanco -->
-                <path d="M108 295 C106 245, 128 212, 152 204 L208 204 C234 212, 254 245, 252 295 Z" fill="#e6f2ff" stroke="#4c8ed9" stroke-width="2.5"/>
-                <!-- Cuello marinero / estelar -->
-                <path d="M148 204 L180 236 L212 204 L198 198 L180 214 L162 198 Z" fill="#418fde" stroke="#ffffff" stroke-width="1.5"/>
-                <!-- Lazo azul con estrella dorada -->
-                <path d="M180 226 L164 238 L169 246 L180 234 L191 246 L196 238 Z" fill="#2c6ec2"/>
-                <circle cx="180" cy="231" r="4.5" fill="#ffe484"/>
-
-                <!-- Brazo apoyado estilo pose de referencia -->
-                <path d="M126 242 C138 225, 185 224, 212 246 C225 256, 218 282, 192 284 L132 284 C118 282, 116 256, 126 242 Z" fill="#f4f9ff" stroke="#5a9be6" stroke-width="2.5"/>
-                <!-- Mano delicada cerca del rostro -->
-                <path d="M196 226 C204 205, 216 196, 222 205 C226 212, 218 228, 208 236" fill="#fff1ea" stroke="#d49a89" stroke-width="2"/>
-
-                <!-- Cuello -->
-                <rect x="171" y="182" width="18" height="24" rx="8" fill="#ffe9df"/>
-
-                <!-- Cabeza / Rostro Anime -->
-                <path d="M134 138 C134 102, 226 102, 226 138 C226 172, 204 192, 180 192 C156 192, 134 172, 134 138 Z" fill="#fff3ec" stroke="#d9a396" stroke-width="1.8"/>
-
-                <!-- Rubor suave en mejillas -->
-                <ellipse cx="152" cy="162" rx="9" ry="4.5" fill="#ff9eb8" opacity="0.55"/>
-                <ellipse cx="206" cy="162" rx="9" ry="4.5" fill="#ff9eb8" opacity="0.55"/>
-
-                <!-- Ojos expresivos estilo Petit Planet con parpadeo -->
-                <g class="animate-blink">
-                  <!-- Ojo Izquierdo -->
-                  <ellipse cx="158" cy="148" rx="9" ry="11.5" fill="#1f4e96"/>
-                  <ellipse cx="158" cy="151" rx="7" ry="7" fill="#4ea3f5"/>
-                  <circle cx="155" cy="144" r="3.2" fill="#ffffff"/>
-                  <circle cx="162" cy="153" r="1.6" fill="#ffffff"/>
-                  <path d="M147 142 Q158 134 169 143" stroke="#183b73" stroke-width="3" stroke-linecap="round"/>
-
-                  <!-- Ojo Derecho -->
-                  <ellipse cx="198" cy="148" rx="9" ry="11.5" fill="#1f4e96"/>
-                  <ellipse cx="198" cy="151" rx="7" ry="7" fill="#4ea3f5"/>
-                  <circle cx="195" cy="144" r="3.2" fill="#ffffff"/>
-                  <circle cx="202" cy="153" r="1.6" fill="#ffffff"/>
-                  <path d="M187 143 Q198 134 209 142" stroke="#183b73" stroke-width="3" stroke-linecap="round"/>
-                </g>
-
-                <!-- Cejas suaves -->
-                <path d="M149 131 Q158 127 166 131" stroke="#6c9bd4" stroke-width="2" stroke-linecap="round"/>
-                <path d="M190 131 Q198 127 207 131" stroke="#6c9bd4" stroke-width="2" stroke-linecap="round"/>
-
-                <!-- Sonrisa dulce -->
-                <path d="M173 171 Q179 176 185 171" stroke="#d17582" stroke-width="2.2" stroke-linecap="round"/>
-
-                <!-- Flequillo y mechones laterales pastel -->
-                <path d="M126 146 C126 92, 234 92, 234 146 C224 128, 212 136, 202 118 C194 136, 184 138, 178 120 C170 138, 154 136, 144 122 C136 136, 130 140, 126 146 Z" fill="#f7fbff" stroke="#5a9be6" stroke-width="2.2"/>
-                <!-- Mechón celeste interno -->
-                <path d="M132 146 C126 168, 132 184, 140 190 C138 174, 140 160, 144 150 Z" fill="#7ec2ff"/>
-                <path d="M228 146 C234 168, 228 184, 220 190 C222 174, 220 160, 216 150 Z" fill="#7ec2ff"/>
-
-                <!-- Pinza de estrella dorada en el cabello -->
-                <path d="M214 114 L217 120 L224 121 L219 125 L220 132 L214 128 L208 132 L209 125 L204 121 L211 120 Z" fill="#ffe484" stroke="#e0a938" stroke-width="1"/>
-
-                <!-- Anillo orbital delantero sutil -->
-                <path d="M42 225 Q180 265 312 162" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" opacity="0.75"/>
-
-                <!-- Estrellitas brillantes alrededor -->
-                <path d="M286 92 L289 100 L297 103 L289 106 L286 114 L283 106 L275 103 L283 100 Z" fill="#ffe484" class="animate-twinkle"/>
-                <path d="M88 182 L90 187 L95 189 L90 191 L88 196 L86 191 L81 189 L86 187 Z" fill="#ffffff" class="animate-twinkle-delay"/>
-
+            <div onclick="playChime('magic'); showToast('✨ ¡FHYA te da la bienvenida a Petit Planet!')" class="w-[260px] sm:w-[295px] md:w-[330px] md:-mt-20 md:-mb-10 md:-mr-5 animate-float select-none cursor-pointer group">
+              <svg viewBox="0 0 380 375" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto drop-shadow-[0_18px_28px_rgba(14,48,102,0.36)] transition-transform duration-300 group-hover:scale-[1.02]">
                 <defs>
-                  <radialGradient id="heroAura" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(180 175) rotate(90) scale(115)">
-                    <stop stop-color="#ffffff"/>
-                    <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+                  <!-- Aura luminosa suave -->
+                  <radialGradient id="proAura" cx="50%" cy="46%" r="50%">
+                    <stop offset="0%" stop-color="#ffffff" stop-opacity="0.88"/>
+                    <stop offset="52%" stop-color="#bae6fd" stop-opacity="0.38"/>
+                    <stop offset="100%" stop-color="#38bdf8" stop-opacity="0"/>
                   </radialGradient>
-                  <linearGradient id="hairBackGrad" x1="180" y1="100" x2="180" y2="295" gradientUnits="userSpaceOnUse">
-                    <stop stop-color="#e3f1ff"/>
-                    <stop offset="0.6" stop-color="#b6d9fc"/>
-                    <stop offset="1" stop-color="#87bef5"/>
+
+                  <!-- Cabello platino-celeste perlado -->
+                  <linearGradient id="proHairBase" x1="190" y1="68" x2="190" y2="335" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color="#ffffff"/>
+                    <stop offset="35%" stop-color="#ebf4ff"/>
+                    <stop offset="72%" stop-color="#bddbfa"/>
+                    <stop offset="100%" stop-color="#84b5ed"/>
                   </linearGradient>
-                  <linearGradient id="miniPlanetGrad" x1="35" y1="90" x2="78" y2="135" gradientUnits="userSpaceOnUse">
-                    <stop stop-color="#ffd6e7"/>
-                    <stop offset="0.5" stop-color="#c4b5fd"/>
-                    <stop offset="1" stop-color="#7dd3fc"/>
+
+                  <linearGradient id="proHairShadow" x1="140" y1="115" x2="245" y2="325" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color="#a5caf7"/>
+                    <stop offset="100%" stop-color="#6096d9"/>
+                  </linearGradient>
+
+                  <!-- Reflejo interno lavanda-celeste en mechones -->
+                  <linearGradient id="proHairInner" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#7dd3fc"/>
+                    <stop offset="55%" stop-color="#60a5fa"/>
+                    <stop offset="100%" stop-color="#818cf8"/>
+                  </linearGradient>
+
+                  <!-- Piel porcelana luminosa con tono melocotón -->
+                  <linearGradient id="proSkin" x1="190" y1="110" x2="190" y2="230" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color="#fff8f3"/>
+                    <stop offset="70%" stop-color="#ffede5"/>
+                    <stop offset="100%" stop-color="#f8d2c7"/>
+                  </linearGradient>
+
+                  <!-- Suéter oversize con sombreado suave -->
+                  <linearGradient id="proSweater" x1="120" y1="215" x2="275" y2="350" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color="#ffffff"/>
+                    <stop offset="50%" stop-color="#e0f0ff"/>
+                    <stop offset="100%" stop-color="#b0d2fa"/>
+                  </linearGradient>
+
+                  <linearGradient id="proSweaterShade" x1="150" y1="245" x2="230" y2="345" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color="#9cc2f2"/>
+                    <stop offset="100%" stop-color="#6b9ee0"/>
+                  </linearGradient>
+
+                  <!-- Iris cristalino estilo gema galáctica -->
+                  <radialGradient id="proIris" cx="50%" cy="62%" r="55%">
+                    <stop offset="0%" stop-color="#a5f3fc"/>
+                    <stop offset="42%" stop-color="#3b82f6"/>
+                    <stop offset="82%" stop-color="#1e3a8a"/>
+                    <stop offset="100%" stop-color="#0f172a"/>
+                  </radialGradient>
+
+                  <!-- Mini planeta pastel -->
+                  <linearGradient id="proPlanet" x1="32" y1="88" x2="86" y2="142" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color="#fef08a"/>
+                    <stop offset="45%" stop-color="#fbcfe8"/>
+                    <stop offset="100%" stop-color="#7dd3fc"/>
                   </linearGradient>
                 </defs>
+
+                <!-- Halo posterior -->
+                <circle cx="195" cy="182" r="138" fill="url(#proAura)"/>
+
+                <!-- Órbita estelar trasera -->
+                <ellipse cx="192" cy="212" rx="164" ry="42" transform="rotate(-15 192 212)" stroke="#fde047" stroke-width="2.4" stroke-dasharray="12 8" opacity="0.85"/>
+
+                <!-- Mini Planeta Kawaii orbitando a la izquierda -->
+                <g class="animate-float-reverse">
+                  <circle cx="56" cy="114" r="24" fill="url(#proPlanet)" stroke="#4479c4" stroke-width="1.8"/>
+                  <path d="M39 104 Q53 94 71 102" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity="0.75"/>
+                  <ellipse cx="56" cy="116" rx="41" ry="9.5" transform="rotate(-22 56 116)" stroke="#ffffff" stroke-width="2.8"/>
+                  <ellipse cx="56" cy="116" rx="41" ry="9.5" transform="rotate(-22 56 116)" stroke="#fde047" stroke-width="1.2" stroke-dasharray="6 6"/>
+                  <!-- Carita del planeta -->
+                  <circle cx="50" cy="115" r="1.8" fill="#1e3a8a"/>
+                  <circle cx="62" cy="115" r="1.8" fill="#1e3a8a"/>
+                  <ellipse cx="46" cy="118" rx="2.4" ry="1.2" fill="#f472b6" opacity="0.65"/>
+                  <ellipse cx="66" cy="118" rx="2.4" ry="1.2" fill="#f472b6" opacity="0.65"/>
+                  <path d="M53.5 118.5 Q56 121 58.5 118.5" stroke="#1e3a8a" stroke-width="1.5" stroke-linecap="round"/>
+                </g>
+
+                <!-- Mechón superior (Ahoge elegante en forma de media luna) -->
+                <path d="M202 66 C208 28, 254 16, 268 42 C248 36, 224 46, 214 70 Z" fill="url(#proHairBase)" stroke="#4479c4" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M208 64 C216 42, 240 32, 258 40" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" opacity="0.9"/>
+
+                <!-- Masa de cabello trasero sedoso con ondas suaves -->
+                <g class="animate-hair-sway">
+                  <!-- Capa profunda de sombra -->
+                  <path d="M112 152 C90 202, 84 274, 112 332 L274 332 C298 276, 290 198, 262 146 C238 84, 140 84, 112 152 Z" fill="url(#proHairShadow)" stroke="#4479c4" stroke-width="2.1"/>
+                  <!-- Capa principal iluminada -->
+                  <path d="M120 150 C102 198, 98 266, 124 326 L264 326 C284 270, 276 194, 254 144 C230 90, 146 90, 120 150 Z" fill="url(#proHairBase)"/>
+                  <!-- Mechones sueltos laterales delicados -->
+                  <path d="M110 180 C88 216, 82 258, 94 294 C102 270, 110 242, 116 216 Z" fill="url(#proHairBase)" stroke="#4479c4" stroke-width="1.8"/>
+                  <path d="M270 180 C292 216, 298 258, 286 294 C278 270, 270 242, 264 216 Z" fill="url(#proHairBase)" stroke="#4479c4" stroke-width="1.8"/>
+                </g>
+
+                <!-- CUERPO Y SUÉTER OVERSIZE COZY -->
+                <path d="M112 335 C110 276, 134 235, 164 225 L224 225 C256 235, 278 276, 276 335 Z" fill="url(#proSweater)" stroke="#4479c4" stroke-width="2.1"/>
+                <!-- Pliegues suaves -->
+                <path d="M138 258 Q162 280 152 330 L122 330 Z" fill="url(#proSweaterShade)" opacity="0.38"/>
+                <path d="M248 258 Q226 282 236 330 L266 330 Z" fill="url(#proSweaterShade)" opacity="0.38"/>
+
+                <!-- Cuello marinero / estelar -->
+                <path d="M158 225 L194 265 L230 225 L214 217 L194 237 L174 217 Z" fill="#2b6cb8" stroke="#1e3a8a" stroke-width="1.8" stroke-linejoin="round"/>
+                <path d="M165 225 L194 257 L223 225" stroke="#e0f2fe" stroke-width="1.8" fill="none"/>
+
+                <!-- Lazo azul real con broche de estrella dorada -->
+                <path d="M194 249 L174 265 L181 275 L194 259 L207 275 L214 265 Z" fill="#2563eb" stroke="#172554" stroke-width="1.6" stroke-linejoin="round"/>
+                <path d="M194 255 L182 283 L189 286 L194 265 L199 286 L206 283 Z" fill="#3b82f6" stroke="#172554" stroke-width="1.5"/>
+                <path d="M194 245 L196.5 251 L203 252 L198 256 L199.5 262.5 L194 259 L188.5 262.5 L190 256 L185 252 L191.5 251 Z" fill="#fde047" stroke="#b45309" stroke-width="1"/>
+
+                <!-- Manga y brazo cruzado apoyado -->
+                <path d="M128 275 C144 253, 198 251, 232 277 C248 289, 240 325, 208 329 L136 329 C118 325, 116 291, 128 275 Z" fill="url(#proSweater)" stroke="#4479c4" stroke-width="2.1"/>
+                <path d="M148 287 Q182 295 216 285" stroke="#8bbbf2" stroke-width="2" stroke-linecap="round"/>
+                <path d="M158 305 Q188 311 212 303" stroke="#8bbbf2" stroke-width="1.8" stroke-linecap="round"/>
+
+                <!-- Mano delicada apoyada cerca de la mejilla -->
+                <path d="M214 254 C222 230, 236 218, 244 226 C250 232, 244 248, 234 262 C228 268, 218 266, 214 254 Z" fill="url(#proSkin)" stroke="#c78b80" stroke-width="1.8"/>
+                <path d="M232 228 C236 234, 234 244, 228 250" stroke="#dfa498" stroke-width="1.4" stroke-linecap="round"/>
+
+                <!-- Cuello fino y delicado -->
+                <rect x="184" y="198" width="20" height="30" rx="10" fill="url(#proSkin)" stroke="#c78b80" stroke-width="1.6"/>
+                <path d="M185 202 Q194 213 203 202 Z" fill="#eab8ac" opacity="0.65"/>
+
+                <!-- CABEZA Y ROSTRO DULCE ESTILO ANIME SHOJO / HOYOVERSE -->
+                <path d="M141 144 C141 102, 247 102, 247 144 C247 183, 221 207, 194 207 C167 207, 141 183, 141 144 Z" fill="url(#proSkin)" stroke="#c78b80" stroke-width="1.8"/>
+
+                <!-- Rubor rosado difuminado con rayitas tiernas -->
+                <ellipse cx="159" cy="173" rx="12" ry="6" fill="#fb7185" opacity="0.46"/>
+                <ellipse cx="227" cy="173" rx="12" ry="6" fill="#fb7185" opacity="0.46"/>
+                <path d="M154 173 L157 170 M160 174 L163 171" stroke="#f43f5e" stroke-width="1.3" stroke-linecap="round" opacity="0.65"/>
+                <path d="M223 173 L226 170 M229 174 L232 171" stroke="#f43f5e" stroke-width="1.3" stroke-linecap="round" opacity="0.65"/>
+
+                <!-- OJOS GRANDES, LUMINOSOS Y MUY EXPRESIVOS -->
+                <g class="animate-blink">
+                  <!-- OJO IZQUIERDO -->
+                  <ellipse cx="167" cy="157" rx="12.5" ry="14.2" fill="#ffffff"/>
+                  <path d="M154.5 154 Q167 144 179.5 154 L179.5 149 Q167 140 154.5 149 Z" fill="#cbd5e1"/>
+                  <!-- Iris cristalino -->
+                  <ellipse cx="167.5" cy="158.5" rx="10" ry="12.6" fill="url(#proIris)"/>
+                  <!-- Pupila -->
+                  <ellipse cx="167.5" cy="159" rx="4.2" ry="5.5" fill="#090d16"/>
+                  <!-- Media luna luminosa inferior -->
+                  <path d="M160.5 165.5 Q167.5 171.5 174.5 165.5" stroke="#a5f3fc" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+                  <!-- Brillos principales + estrellita en el ojo -->
+                  <circle cx="163" cy="152" r="3.8" fill="#ffffff"/>
+                  <circle cx="172.5" cy="162.5" r="1.9" fill="#ffffff"/>
+                  <path d="M172 151 L173 153 L175 153.5 L173 154.5 L172 156.5 L171 154.5 L169 153.5 L171 153 Z" fill="#fef08a"/>
+                  <!-- Pestañas superiores suaves y curvadas -->
+                  <path d="M153 151 C159 140, 176 140, 182 152" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+                  <path d="M152 149 L147 144" stroke="#1e293b" stroke-width="2.3" stroke-linecap="round"/>
+                  <path d="M155 146 L151 141" stroke="#1e293b" stroke-width="1.8" stroke-linecap="round"/>
+
+                  <!-- OJO DERECHO -->
+                  <ellipse cx="219" cy="157" rx="12.5" ry="14.2" fill="#ffffff"/>
+                  <path d="M206.5 154 Q219 144 231.5 154 L231.5 149 Q219 140 206.5 149 Z" fill="#cbd5e1"/>
+                  <ellipse cx="218.5" cy="158.5" rx="10" ry="12.6" fill="url(#proIris)"/>
+                  <ellipse cx="218.5" cy="159" rx="4.2" ry="5.5" fill="#090d16"/>
+                  <path d="M211.5 165.5 Q218.5 171.5 225.5 165.5" stroke="#a5f3fc" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+                  <circle cx="214" cy="152" r="3.8" fill="#ffffff"/>
+                  <circle cx="223.5" cy="162.5" r="1.9" fill="#ffffff"/>
+                  <path d="M223 151 L224 153 L226 153.5 L224 154.5 L223 156.5 L222 154.5 L220 153.5 L222 153 Z" fill="#fef08a"/>
+                  <path d="M204 152 C210 140, 227 140, 233 151" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+                  <path d="M234 149 L239 144" stroke="#1e293b" stroke-width="2.3" stroke-linecap="round"/>
+                  <path d="M231 146 L235 141" stroke="#1e293b" stroke-width="1.8" stroke-linecap="round"/>
+                </g>
+
+                <!-- Cejas finas y dulces -->
+                <path d="M156 136 Q167 131 177 136" stroke="#5b8bd4" stroke-width="2" stroke-linecap="round" fill="none"/>
+                <path d="M209 136 Q219 131 230 136" stroke="#5b8bd4" stroke-width="2" stroke-linecap="round" fill="none"/>
+
+                <!-- Naricita delicada y boquita dulce con brillo labial -->
+                <circle cx="193" cy="171" r="1.2" fill="#c9887d"/>
+                <path d="M186 183 Q193 189.5 200 183" stroke="#c45c6e" stroke-width="2.3" stroke-linecap="round" fill="none"/>
+                <path d="M190 186 Q193 188.5 196 186" fill="#fda4af" opacity="0.6"/>
+
+                <!-- FLEQUILLO VAPOROSO MULTICAPA CON MECHONES CELESTE-LAVANDA -->
+                <path d="M137 150 C128 182, 134 208, 148 220 C145 198, 148 176, 154 158 Z" fill="url(#proHairInner)" stroke="#3b82f6" stroke-width="1.5"/>
+                <path d="M251 150 C260 182, 254 208, 240 220 C243 198, 240 176, 234 158 Z" fill="url(#proHairInner)" stroke="#3b82f6" stroke-width="1.5"/>
+
+                <!-- Flequillo principal con puntas finas y suaves -->
+                <path d="M128 154 C128 90, 260 90, 260 154 C249 132, 237 144, 225 122 C217 145, 207 149, 198 124 C190 149, 178 147, 168 124 C157 147, 143 134, 128 154 Z" fill="url(#proHairBase)" stroke="#4479c4" stroke-width="2.1" stroke-linejoin="round"/>
+
+                <!-- Halo de brillo sedoso en el cabello -->
+                <path d="M150 112 Q174 103 192 110 M204 110 Q221 104 238 113" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" opacity="0.95"/>
+
+                <!-- Broche doble de estrella y luna en el flequillo -->
+                <path d="M235 117 L238.5 124 L246 125 L240.5 130 L242 137.5 L235 133.5 L228 137.5 L229.5 130 L224 125 L231.5 124 Z" fill="#fde047" stroke="#b45309" stroke-width="1.3" stroke-linejoin="round"/>
+                <circle cx="235" cy="127" r="2.2" fill="#ffffff"/>
+                <circle cx="222" cy="133" r="3" fill="#93c5fd" stroke="#2563eb" stroke-width="1.2"/>
+
+                <!-- Órbita delantera con destellos -->
+                <path d="M44 252 Q196 296 342 178" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" opacity="0.82"/>
+                <circle cx="310" cy="202" r="4.5" fill="#fde047"/>
+
+                <!-- Estrellas flotantes -->
+                <path d="M316 94 L320 104 L330 108 L320 112 L316 122 L312 112 L302 108 L312 104 Z" fill="#fde047" class="animate-twinkle"/>
+                <path d="M92 204 L94.5 210 L100.5 212.5 L94.5 215 L92 221 L89.5 215 L83.5 212.5 L89.5 210 Z" fill="#ffffff" class="animate-twinkle-delay"/>
               </svg>
             </div>
           </div>
@@ -461,65 +667,78 @@
               </div>
             </div>
 
-            <!-- Mascota Chibi Animada de Petit Planet en la esquina inferior derecha -->
+            <!-- Mascota Chibi Animada con acabado ilustrado profesional -->
             <div class="col-span-4 flex justify-end items-end">
-              <div class="w-24 sm:w-28 animate-chibi-bounce cursor-pointer" onclick="triggerMascotSparkle()" title="¡Haz clic para saludar a Luma!">
-                <svg viewBox="0 0 130 140" fill="none" class="w-full h-auto drop-shadow-md">
-                  <!-- Sombra en el suelo -->
-                  <ellipse cx="65" cy="132" rx="32" ry="5" fill="#bae0ff"/>
-                  <!-- Traje/Pijama de criatura espacial cozy -->
-                  <path d="M35 126 C32 95, 42 82, 65 82 C88 82, 98 95, 95 126 Z" fill="#d9ecff" stroke="#4c8ed9" stroke-width="2.5"/>
+              <div class="w-24 sm:w-28 animate-chibi-bounce cursor-pointer" onclick="playChime('magic'); triggerMascotSparkle()" title="¡Haz clic para saludar a Luma!">
+                <svg viewBox="0 0 140 150" fill="none" class="w-full h-auto drop-shadow-md">
+                  <defs>
+                    <linearGradient id="chibiSuit" x1="40" y1="80" x2="100" y2="140" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stop-color="#e0f2fe"/>
+                      <stop offset="100%" stop-color="#93c5fd"/>
+                    </linearGradient>
+                    <radialGradient id="chibiEye" cx="50%" cy="60%" r="55%">
+                      <stop offset="0%" stop-color="#60a5fa"/>
+                      <stop offset="65%" stop-color="#1d4ed8"/>
+                      <stop offset="100%" stop-color="#172554"/>
+                    </radialGradient>
+                  </defs>
+                  <!-- Sombra suave -->
+                  <ellipse cx="70" cy="141" rx="34" ry="5.5" fill="#bae6fd"/>
+                  <!-- Traje/Pijama de criatura espacial -->
+                  <path d="M36 135 C33 102, 44 86, 70 86 C96 86, 107 102, 104 135 Z" fill="url(#chibiSuit)" stroke="#3769b3" stroke-width="2.4"/>
                   <!-- Barriguita blanca con botones estrella -->
-                  <ellipse cx="65" cy="108" rx="16" ry="15" fill="#ffffff"/>
-                  <circle cx="65" cy="102" r="2.5" fill="#ffd166"/>
-                  <circle cx="65" cy="112" r="2.5" fill="#ffd166"/>
+                  <ellipse cx="70" cy="115" rx="17" ry="16" fill="#ffffff"/>
+                  <path d="M70 105 L71.5 108 L75 108.5 L72.5 111 L73 114.5 L70 112.8 L67 114.5 L67.5 111 L65 108.5 L68.5 108 Z" fill="#facc15"/>
+                  <circle cx="70" cy="121" r="2.6" fill="#fde047" stroke="#eab308" stroke-width="0.8"/>
                   <!-- Manitas -->
-                  <ellipse cx="36" cy="102" rx="8" ry="6" transform="rotate(-25 36 102)" fill="#d9ecff" stroke="#4c8ed9" stroke-width="2"/>
-                  <ellipse cx="94" cy="102" rx="8" ry="6" transform="rotate(25 94 102)" fill="#d9ecff" stroke="#4c8ed9" stroke-width="2"/>
+                  <ellipse cx="38" cy="108" rx="9" ry="6.5" transform="rotate(-25 38 108)" fill="#e0f2fe" stroke="#3769b3" stroke-width="2"/>
+                  <ellipse cx="102" cy="108" rx="9" ry="6.5" transform="rotate(25 102 108)" fill="#e0f2fe" stroke="#3769b3" stroke-width="2"/>
 
                   <!-- Capucha de Criatura Estelar -->
-                  <circle cx="65" cy="56" r="34" fill="#d9ecff" stroke="#4c8ed9" stroke-width="2.5"/>
-                  <!-- Orejitas de planeta/criatura -->
-                  <circle cx="38" cy="28" r="10" fill="#d9ecff" stroke="#4c8ed9" stroke-width="2.5"/>
-                  <circle cx="92" cy="28" r="10" fill="#d9ecff" stroke="#4c8ed9" stroke-width="2.5"/>
-                  <circle cx="38" cy="28" r="5" fill="#9bc9ff"/>
-                  <circle cx="92" cy="28" r="5" fill="#9bc9ff"/>
-                  <!-- Antenita de estrella en la capucha -->
-                  <path d="M65 22 L65 10" stroke="#4c8ed9" stroke-width="2.5" stroke-linecap="round"/>
-                  <circle cx="65" cy="8" r="4.5" fill="#ffe484" stroke="#e0a938" stroke-width="1.5"/>
+                  <circle cx="70" cy="60" r="36" fill="url(#chibiSuit)" stroke="#3769b3" stroke-width="2.4"/>
+                  <!-- Orejitas -->
+                  <circle cx="40" cy="30" r="11" fill="#e0f2fe" stroke="#3769b3" stroke-width="2.4"/>
+                  <circle cx="100" cy="30" r="11" fill="#e0f2fe" stroke="#3769b3" stroke-width="2.4"/>
+                  <circle cx="40" cy="30" r="5.5" fill="#60a5fa"/>
+                  <circle cx="100" cy="30" r="5.5" fill="#60a5fa"/>
+                  <!-- Antenita con estrella -->
+                  <path d="M70 24 L70 11" stroke="#3769b3" stroke-width="2.6" stroke-linecap="round"/>
+                  <path d="M70 3 L72 7.5 L77 8 L73.5 11.5 L74.5 16 L70 13.5 L65.5 16 L66.5 11.5 L63 8 L68 7.5 Z" fill="#fde047" stroke="#ca8a04" stroke-width="1"/>
 
                   <!-- Carita Chibi -->
-                  <ellipse cx="65" cy="60" rx="24" ry="20" fill="#fff2eb"/>
+                  <ellipse cx="70" cy="64" rx="26" ry="21" fill="#fff5ef" stroke="#d49a8e" stroke-width="1.5"/>
                   <!-- Mejillas -->
-                  <ellipse cx="49" cy="64" rx="4.5" ry="2.5" fill="#ff9eb8" opacity="0.7"/>
-                  <ellipse cx="81" cy="64" rx="4.5" ry="2.5" fill="#ff9eb8" opacity="0.7"/>
+                  <ellipse cx="52" cy="69" rx="5" ry="2.6" fill="#fb7185" opacity="0.6"/>
+                  <ellipse cx="88" cy="69" rx="5" ry="2.6" fill="#fb7185" opacity="0.6"/>
                   <!-- Ojos Chibi -->
                   <g class="animate-blink">
-                    <ellipse cx="54" cy="58" rx="4" ry="5" fill="#1e4c8a"/>
-                    <ellipse cx="76" cy="58" rx="4" ry="5" fill="#1e4c8a"/>
-                    <circle cx="52.5" cy="56.5" r="1.6" fill="#ffffff"/>
-                    <circle cx="74.5" cy="56.5" r="1.6" fill="#ffffff"/>
+                    <ellipse cx="58" cy="62" rx="4.5" ry="5.6" fill="url(#chibiEye)"/>
+                    <ellipse cx="82" cy="62" rx="4.5" ry="5.6" fill="url(#chibiEye)"/>
+                    <circle cx="56.5" cy="60" r="1.8" fill="#ffffff"/>
+                    <circle cx="80.5" cy="60" r="1.8" fill="#ffffff"/>
+                    <circle cx="59.5" cy="64.5" r="0.9" fill="#bae6fd"/>
+                    <circle cx="83.5" cy="64.5" r="0.9" fill="#bae6fd"/>
                   </g>
                   <!-- Boquita :3 -->
-                  <path d="M61 66 Q63 68.5 65 66 Q67 68.5 69 66" stroke="#c96b78" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+                  <path d="M66 71 Q68 73.5 70 71 Q72 73.5 74 71" stroke="#c96b78" stroke-width="1.9" stroke-linecap="round" fill="none"/>
                   <!-- Flequillo mini -->
-                  <path d="M44 50 C48 38, 82 38, 86 50 C78 45, 72 48, 65 42 C58 48, 52 45, 44 50 Z" fill="#f7fbff"/>
+                  <path d="M47 54 C51 40, 89 40, 93 54 C84 48, 78 52, 70 45 C62 52, 56 48, 47 54 Z" fill="#ffffff" stroke="#4479c4" stroke-width="1.4"/>
                 </svg>
               </div>
             </div>
           </div>
         </article>
 
-        <!-- Fila de 2 Widgets Cuadrados (Fecha / Cumpleaños & Reloj en Vivo) -->
+        <!-- Fila de 2 Widgets Cuadrados (Fecha Especial / Cumpleaños & Reloj en Vivo) -->
         <div class="grid grid-cols-2 gap-4 sm:gap-5">
-          <!-- Widget Izquierdo Azul: Fecha Especial / Cumpleaños / Aniversario -->
-          <div class="blue-bento bento-card rounded-[26px] p-5 flex flex-col justify-between text-white relative overflow-hidden min-h-[155px]">
+          <!-- Widget Izquierdo Azul: Fecha Especial / Cumpleaños -->
+          <div onclick="playChime('magic'); celebrateBirthday()" class="blue-bento bento-card cursor-pointer rounded-[26px] p-5 flex flex-col justify-between text-white relative overflow-hidden min-h-[158px] group">
             <div class="flex items-start justify-between">
               <div>
-                <span class="text-4xl sm:text-[42px] font-black leading-none tracking-tight block">14</span>
+                <span class="text-4xl sm:text-[42px] font-black leading-none tracking-tight block group-hover:scale-105 transition-transform origin-left">14</span>
                 <span class="text-xs sm:text-sm font-bold text-sky-100 mt-1 block">November</span>
               </div>
-              <!-- Icono Pastel / Planeta Estelar animado -->
+              <!-- Icono Pastel Estelar animado -->
               <div class="w-11 h-11 text-white/95 animate-float">
                 <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M8 38h32" />
@@ -546,7 +765,7 @@
           </div>
 
           <!-- Widget Derecho Blanco: Reloj Digital en Tiempo Real -->
-          <div class="white-bento bento-card rounded-[26px] p-5 flex flex-col justify-center min-h-[155px]">
+          <div class="white-bento bento-card rounded-[26px] p-5 flex flex-col justify-center min-h-[158px]">
             <div class="flex items-baseline gap-1 text-[#16498a]">
               <span id="live-time" class="text-3xl sm:text-[34px] font-black tracking-tight leading-none">9:28</span>
               <span id="live-ampm" class="text-sm sm:text-base font-extrabold uppercase">PM</span>
@@ -560,49 +779,44 @@
           </div>
         </div>
 
-        <!-- Barra Inferior de Comunidad / Links (Píldora blanca como en la imagen) -->
+        <!-- Barra Inferior de Comunidad / Links (Píldora blanca como en la referencia) -->
         <div class="bg-white/95 rounded-full px-3.5 py-2.5 shadow-lg border-2 border-sky-300 flex flex-wrap items-center justify-between gap-2">
           <!-- 5 Mini Avatares de Habitantes / Amigos de Petit Planet -->
           <div class="flex items-center -space-x-1 sm:space-x-1.5">
-            <!-- Avatar 1 -->
-            <button onclick="showToast('🪐 Planeta Principal: Starlight Cove')" class="relative group focus:outline-none" title="Starlight Cove">
+            <button onclick="playChime('tap'); showToast('🌱 Starlight Cove • Isla Principal de Fhya')" class="relative group focus:outline-none" title="Starlight Cove">
               <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-emerald-100 border-2 border-sky-400 flex items-center justify-center text-sm shadow-sm transition-transform group-hover:scale-110">🌱</div>
               <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-lime-400 border border-white rounded-full"></span>
             </button>
-            <!-- Avatar 2 -->
-            <button onclick="showToast('☕ Café Cósmico: Abierto para visitas')" class="relative group focus:outline-none" title="Café Cósmico">
+            <button onclick="playChime('tap'); showToast('🧸 Café Cósmico • Abierto para visitas')" class="relative group focus:outline-none" title="Café Cósmico">
               <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-amber-100 border-2 border-sky-400 flex items-center justify-center text-sm shadow-sm transition-transform group-hover:scale-110">🧸</div>
               <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-lime-400 border border-white rounded-full"></span>
             </button>
-            <!-- Avatar 3 -->
-            <button onclick="showToast('✨ Presets & Filtros IG de Fhya')" class="relative group focus:outline-none" title="Presets IG">
+            <button onclick="playChime('tap'); showToast('🐰 Presets & Filtros IG Pastel de Fhya')" class="relative group focus:outline-none" title="Presets IG">
               <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-sky-100 border-2 border-sky-400 flex items-center justify-center text-sm shadow-sm transition-transform group-hover:scale-110">🐰</div>
               <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-lime-400 border border-white rounded-full"></span>
             </button>
-            <!-- Avatar 4 -->
-            <button onclick="showToast('🌙 Dreamy Night Island Tour')" class="relative group focus:outline-none" title="Dreamy Island">
-              <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-purple-100 border-2 border-sky-400 flex items-center justify-center text-sm shadow-sm transition-transform group-hover:scale-110">🐱</div>
+            <button onclick="playChime('tap'); showToast('🔮 Bazar Galáctico • Intercambio de muebles')" class="relative group focus:outline-none" title="Bazar Galáctico">
+              <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-indigo-100 border-2 border-sky-400 flex items-center justify-center text-sm shadow-sm transition-transform group-hover:scale-110">🔮</div>
               <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-lime-400 border border-white rounded-full"></span>
             </button>
-            <!-- Avatar 5 -->
-            <button onclick="showToast('💫 Collabs abiertas por DM')" class="relative group focus:outline-none" title="Collabs">
-              <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-pink-100 border-2 border-sky-400 flex items-center justify-center text-sm shadow-sm transition-transform group-hover:scale-110">🦊</div>
+            <button onclick="playChime('tap'); showToast('🐑 Pradera Nube • Ovejitas de Petit Planet')" class="relative group focus:outline-none" title="Pradera Nube">
+              <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-pink-100 border-2 border-sky-400 flex items-center justify-center text-sm shadow-sm transition-transform group-hover:scale-110">🐑</div>
               <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-lime-400 border border-white rounded-full"></span>
             </button>
           </div>
 
-          <!-- 4 Botones Circulares Azules Interactivos (Instagram, DM, Copiar ID Planeta, Reels) -->
+          <!-- 4 Botones Circulares de Acción Rápida (DM, Instagram, Copiar ID Planeta, Reels) -->
           <div class="flex items-center gap-1.5 sm:gap-2">
-            <button onclick="openSocialModal('instagram')" aria-label="Instagram" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#418fde] hover:bg-[#2b74c2] text-white flex items-center justify-center text-sm shadow-sm transition-transform hover:scale-110">
-              <i class="fa-brands fa-instagram"></i>
-            </button>
-            <button onclick="openSocialModal('dm')" aria-label="Mensaje Directo" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#418fde] hover:bg-[#2b74c2] text-white flex items-center justify-center text-xs shadow-sm transition-transform hover:scale-110">
+            <button onclick="playChime('soft'); openSocialModal('dm')" title="Enviar DM a FHYA" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#418fde] hover:bg-[#2c75c4] text-white flex items-center justify-center text-xs sm:text-sm shadow-sm transition-transform hover:scale-105">
               <i class="fa-solid fa-envelope"></i>
             </button>
-            <button onclick="copyPlanetID()" aria-label="Copiar ID de Planeta" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#418fde] hover:bg-[#2b74c2] text-white flex items-center justify-center text-xs shadow-sm transition-transform hover:scale-110" title="Copiar ID de Petit Planet">
+            <button onclick="playChime('soft'); openProfileModal()" title="Perfil @fhya.planet" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#418fde] hover:bg-[#2c75c4] text-white flex items-center justify-center text-xs sm:text-sm shadow-sm transition-transform hover:scale-105">
+              <i class="fa-brands fa-instagram"></i>
+            </button>
+            <button onclick="playChime('magic'); copyPlanetID()" title="Copiar ID de Planeta en el juego" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#418fde] hover:bg-[#2c75c4] text-white flex items-center justify-center text-xs sm:text-sm shadow-sm transition-transform hover:scale-105">
               <i class="fa-solid fa-location-dot"></i>
             </button>
-            <button onclick="openGalleryModal()" aria-label="Reels y Videos" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#418fde] hover:bg-[#2b74c2] text-white flex items-center justify-center text-xs shadow-sm transition-transform hover:scale-110" title="Ver Reels">
+            <button onclick="playChime('soft'); openGalleryModal()" title="Ver Reels y Edits" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#418fde] hover:bg-[#2c75c4] text-white flex items-center justify-center text-xs sm:text-sm shadow-sm transition-transform hover:scale-105">
               <i class="fa-solid fa-video"></i>
             </button>
           </div>
@@ -610,137 +824,271 @@
 
       </div>
 
-      <!-- COLUMNA DERECHA: GALERÍA DE VERSIONES / ESTILOS IG (GRID 2x2 COMO LA REFERENCIA) -->
+      <!-- COLUMNA DERECHA (5 columnas en desktop: 4 Tarjetas Ilustradas Profesionales estilo Petit Planet) -->
       <div id="versions-grid" class="md:col-span-5 grid grid-cols-2 gap-4 sm:gap-5">
 
-        <!-- Tarjeta Alta 1: Cozy Ver. -->
-        <div onclick="openVersionModal('cozy')" class="bento-card cursor-pointer rounded-[28px] bg-gradient-to-b from-[#d8ecff] via-[#eef6ff] to-[#b5dafc] border-[3px] border-white/85 relative overflow-hidden min-h-[235px] sm:min-h-[255px] flex flex-col justify-between group shadow-lg">
-          <!-- Fondo estrellado animado -->
-          <div class="absolute inset-0 pointer-events-none">
-            <div class="w-2 h-2 bg-white rounded-full absolute top-5 left-5 animate-twinkle"></div>
-            <div class="w-1.5 h-1.5 bg-amber-200 rounded-full absolute top-10 right-6 animate-twinkle-delay"></div>
-            <div class="w-28 h-28 bg-sky-300/30 rounded-full blur-xl absolute top-8 left-1/2 -translate-x-1/2"></div>
-          </div>
+        <!-- Tarjeta Alta 1: Astral Ver. (Guardián Estelar Cozy & Velo Cósmico estilo Petit Planet con animación) -->
+        <div onclick="playChime('magic'); openVersionModal('astral')" class="bento-card cursor-pointer rounded-[28px] bg-gradient-to-b from-[#1e2b6b] via-[#3751a8] to-[#6895e8] border-[3px] border-white/85 relative overflow-hidden min-h-[245px] sm:min-h-[265px] flex flex-col justify-between group shadow-lg">
+          <svg viewBox="0 0 200 270" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+            <defs>
+              <radialGradient id="astralNebula" cx="50%" cy="38%" r="58%">
+                <stop offset="0%" stop-color="#93c5fd" stop-opacity="0.55"/>
+                <stop offset="55%" stop-color="#6366f1" stop-opacity="0.25"/>
+                <stop offset="100%" stop-color="#1e1b4b" stop-opacity="0"/>
+              </radialGradient>
+              <linearGradient id="astralFur" x1="100" y1="60" x2="100" y2="230" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#1d4ed8"/>
+                <stop offset="55%" stop-color="#1e3a8a"/>
+                <stop offset="100%" stop-color="#172554"/>
+              </linearGradient>
+              <radialGradient id="astralSeedOrb" cx="42%" cy="38%" r="58%">
+                <stop offset="0%" stop-color="#fef9c3"/>
+                <stop offset="45%" stop-color="#86efac"/>
+                <stop offset="85%" stop-color="#22c55e"/>
+                <stop offset="100%" stop-color="#15803d"/>
+              </radialGradient>
+            </defs>
 
-          <!-- Ilustración Vectorial Animada "Cozy Ver." -->
-          <div class="relative z-10 flex-1 flex items-center justify-center pt-3 px-2 transition-transform duration-500 group-hover:scale-105">
-            <svg viewBox="0 0 180 220" class="w-full max-w-[155px] h-auto animate-float">
-              <!-- Cabello largo lavanda/plata -->
-              <path d="M45 95 C38 145, 42 195, 55 215 L125 215 C138 195, 142 145, 135 95 C128 50, 52 50, 45 95 Z" fill="#dcd6ff" stroke="#7c8ce0" stroke-width="2"/>
-              <!-- Vestido blanco etéreo -->
-              <path d="M56 215 L66 142 L114 142 L124 215 Z" fill="#ffffff" stroke="#8ab4f8" stroke-width="2"/>
-              <!-- Rostro perfil suave -->
-              <circle cx="90" cy="100" r="28" fill="#fff3ec"/>
-              <!-- Rosa azul / Flor estelar en el cabello -->
-              <circle cx="66" cy="102" r="13" fill="#3a6bc7"/>
-              <circle cx="66" cy="102" r="8" fill="#6395f2"/>
-              <circle cx="66" cy="102" r="4" fill="#1e3d82"/>
-              <!-- Ojo sereno -->
-              <path d="M88 102 Q95 106 102 102" stroke="#3c5a99" stroke-width="2.5" stroke-linecap="round"/>
-              <ellipse cx="83" cy="108" rx="4" ry="2" fill="#ff9eb8" opacity="0.6"/>
-              <!-- Flequillo suave -->
-              <path d="M60 95 C65 62, 115 62, 120 95 C108 82, 95 88, 86 76 C78 88, 68 85, 60 95 Z" fill="#f3f0ff"/>
-              <!-- Ahoge -->
-              <path d="M90 66 C94 46, 114 42, 118 54" stroke="#8d9ce8" stroke-width="2.5" stroke-linecap="round"/>
-            </svg>
-          </div>
+            <!-- Nebulosa y cielo estrellado animado -->
+            <circle cx="100" cy="108" r="95" fill="url(#astralNebula)"/>
+            <!-- Anillo estelar giratorio suave -->
+            <g class="animate-orbit-spin" style="transform-origin: 100px 125px;">
+              <circle cx="100" cy="125" r="76" stroke="#bae6fd" stroke-width="1.2" stroke-dasharray="6 10" opacity="0.5"/>
+              <circle cx="176" cy="125" r="2.5" fill="#fde047"/>
+              <circle cx="24" cy="125" r="2" fill="#ffffff"/>
+            </g>
 
-          <!-- Etiqueta inferior -->
-          <div class="relative z-10 pb-3.5 pt-6 bg-gradient-to-t from-sky-900/55 via-sky-900/20 to-transparent text-center">
-            <span class="text-white font-extrabold text-sm sm:text-[15px] tracking-wide drop-shadow">
-              Cozy Ver.
-            </span>
-          </div>
-        </div>
+            <!-- Mini planeta saturado arriba a la izquierda -->
+            <g class="animate-float-reverse">
+              <circle cx="38" cy="48" r="13" fill="#93c5fd" stroke="#e0f2fe" stroke-width="1.2"/>
+              <ellipse cx="38" cy="49" rx="22" ry="5" transform="rotate(-18 38 49)" stroke="#fde047" stroke-width="1.6"/>
+            </g>
 
-        <!-- Tarjeta Alta 2: Explorer Ver. -->
-        <div onclick="openVersionModal('explorer')" class="bento-card cursor-pointer rounded-[28px] bg-gradient-to-b from-[#6ab0f3] via-[#a3d2fc] to-[#d6ebff] border-[3px] border-white/85 relative overflow-hidden min-h-[235px] sm:min-h-[255px] flex flex-col justify-between group shadow-lg">
-          <!-- Planeta pequeño decorativo arriba -->
-          <div class="absolute top-3 left-3 w-7 h-7 opacity-80 animate-float-reverse">
-            <svg viewBox="0 0 40 40" fill="none">
-              <circle cx="20" cy="20" r="10" fill="#ffe484"/>
-              <ellipse cx="20" cy="20" rx="17" ry="4.5" transform="rotate(-20 20 20)" stroke="#ffffff" stroke-width="2"/>
-            </svg>
-          </div>
+            <!-- Estrellas parpadeantes de fondo -->
+            <path d="M158 34 L160 40 L166 42 L160 44 L158 50 L156 44 L150 42 L156 40 Z" fill="#fde047" class="animate-twinkle"/>
+            <path d="M168 78 L169.5 82 L173.5 83.5 L169.5 85 L168 89 L166.5 85 L162.5 83.5 L166.5 82 Z" fill="#ffffff" class="animate-twinkle-delay"/>
+            <circle cx="32" cy="95" r="2" fill="#fde047" class="animate-twinkle-delay"/>
 
-          <!-- Ilustración Vectorial Animada "Explorer Ver." -->
-          <div class="relative z-10 flex-1 flex items-center justify-center pt-3 px-2 transition-transform duration-500 group-hover:scale-105">
-            <svg viewBox="0 0 180 220" class="w-full max-w-[155px] h-auto animate-float-reverse">
-              <!-- Capa de exploradora azul marino -->
-              <path d="M52 215 L62 135 L118 135 L128 215 Z" fill="#234885" stroke="#163161" stroke-width="2"/>
-              <path d="M62 135 L90 165 L118 135" fill="#418fde"/>
-              <!-- Lazo dorado -->
-              <path d="M90 162 L76 175 L82 182 L90 170 L98 182 L104 175 Z" fill="#63b3ff"/>
-              <!-- Cabello corto ondulado -->
-              <path d="M54 112 C48 80, 132 80, 126 112 C130 135, 118 145, 90 145 C62 145, 50 135, 54 112 Z" fill="#eef6ff" stroke="#4c8ed9" stroke-width="2"/>
-              <!-- Rostro -->
-              <circle cx="90" cy="108" r="24" fill="#fff3ec"/>
-              <!-- Ojos brillantes -->
-              <g class="animate-blink">
-                <ellipse cx="81" cy="108" rx="3.8" ry="4.8" fill="#1e4c8a"/>
-                <ellipse cx="99" cy="108" rx="3.8" ry="4.8" fill="#1e4c8a"/>
-                <circle cx="80" cy="106.5" r="1.4" fill="#ffffff"/>
-                <circle cx="98" cy="106.5" r="1.4" fill="#ffffff"/>
+            <!-- Nube cósmica base flotante -->
+            <path d="M18 228 Q45 208 82 216 Q118 202 154 216 Q180 212 192 232 L192 270 L10 270 Z" fill="#c7d2fe" opacity="0.35" class="animate-cloud-glide"/>
+            <path d="M12 242 Q56 224 102 234 Q148 222 190 242 L190 270 L12 270 Z" fill="#e0e7ff" opacity="0.5"/>
+
+            <!-- GUARDIÁN CÓSMICO DE PETIT PLANET FLOTANDO -->
+            <g class="animate-astral-drift">
+              <!-- Cola emplumada multicolor estilo Petit Planet -->
+              <path d="M128 188 C154 178, 174 152, 168 126 C158 136, 148 144, 142 154 C144 138, 142 124, 134 114 C126 130, 120 148, 118 168 Z" fill="#0284c7" stroke="#bae6fd" stroke-width="1.4"/>
+              <path d="M124 186 C144 176, 156 160, 154 142 C142 148, 132 158, 122 172 Z" fill="#fb923c"/>
+              <path d="M120 186 C134 178, 144 166, 142 154 C132 158, 124 166, 118 178 Z" fill="#fde047"/>
+
+              <!-- Cuerpo esponjoso -->
+              <ellipse cx="94" cy="152" rx="42" ry="48" fill="url(#astralFur)" stroke="#60a5fa" stroke-width="1.6"/>
+              <!-- Manchas doradas en el pelaje -->
+              <ellipse cx="62" cy="144" rx="5" ry="8" transform="rotate(-18 62 144)" fill="#facc15"/>
+              <ellipse cx="64" cy="164" rx="4.5" ry="7" transform="rotate(-10 64 164)" fill="#facc15"/>
+
+              <!-- Pecho y carita blanca esponjosa -->
+              <path d="M68 112 C64 96, 116 96, 112 112 C122 126, 120 166, 94 172 C68 166, 62 126, 68 112 Z" fill="#f8fafc"/>
+              <!-- Orejitas puntiagudas -->
+              <path d="M68 102 L64 84 L80 94 Z" fill="#1d4ed8" stroke="#60a5fa" stroke-width="1.4"/>
+              <path d="M112 102 L116 84 L100 94 Z" fill="#1d4ed8" stroke="#60a5fa" stroke-width="1.4"/>
+
+              <!-- Ojitos dormidos/tiernos y sonrisa :3 -->
+              <path d="M74 114 Q80 118 86 114" stroke="#1e293b" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+              <path d="M98 114 Q104 118 110 114" stroke="#1e293b" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+              <path d="M88 120 Q91 123 94 120 Q97 123 100 120" stroke="#64748b" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+
+              <!-- Patitas traseras con almohadillas celestes -->
+              <ellipse cx="78" cy="188" rx="12" ry="10" fill="#f8fafc" stroke="#93c5fd" stroke-width="1.4"/>
+              <circle cx="78" cy="190" r="4" fill="#38bdf8"/>
+              <circle cx="73" cy="184" r="1.8" fill="#38bdf8"/>
+              <circle cx="78" cy="182.5" r="1.8" fill="#38bdf8"/>
+              <circle cx="83" cy="184" r="1.8" fill="#38bdf8"/>
+
+              <ellipse cx="108" cy="188" rx="12" ry="10" fill="#f8fafc" stroke="#93c5fd" stroke-width="1.4"/>
+              <circle cx="108" cy="190" r="4" fill="#38bdf8"/>
+              <circle cx="103" cy="184" r="1.8" fill="#38bdf8"/>
+              <circle cx="108" cy="182.5" r="1.8" fill="#38bdf8"/>
+              <circle cx="113" cy="184" r="1.8" fill="#38bdf8"/>
+
+              <!-- Orbe-Planeta Verde Luminoso abrazado -->
+              <g class="animate-heartbeat" style="transform-origin: 94px 152px;">
+                <circle cx="94" cy="152" r="22" fill="url(#astralSeedOrb)" stroke="#dcfce7" stroke-width="1.6"/>
+                <!-- Copas de arbolitos en el orbe -->
+                <circle cx="85" cy="133" r="7" fill="#22c55e"/>
+                <circle cx="95" cy="130" r="8" fill="#4ade80"/>
+                <circle cx="104" cy="134" r="6.5" fill="#16a34a"/>
+                <!-- Estrellitas dentro del orbe -->
+                <path d="M88 150 L89.5 153 L93 153.5 L90.5 156 L91 159.5 L88 157.8 L85 159.5 L85.5 156 L83 153.5 L86.5 153 Z" fill="#fef08a"/>
+                <circle cx="102" cy="156" r="2.2" fill="#ffffff"/>
               </g>
-              <path d="M87 118 Q90 121 93 118" stroke="#d17582" stroke-width="2" stroke-linecap="round"/>
-              <!-- Sombrero de Copa Estelar (guiño elegante al diseño) -->
-              <ellipse cx="90" cy="78" rx="42" ry="10" transform="rotate(-12 90 78)" fill="#1d3c73" stroke="#63b3ff" stroke-width="2"/>
-              <path d="M64 78 L68 42 C72 36, 104 34, 108 40 L114 74 Z" transform="rotate(-12 90 60)" fill="#264d91" stroke="#63b3ff" stroke-width="2"/>
-              <path d="M66 68 L112 64" transform="rotate(-12 90 66)" stroke="#ffe484" stroke-width="4"/>
-            </svg>
-          </div>
 
-          <!-- Etiqueta inferior -->
-          <div class="relative z-10 pb-3.5 pt-6 bg-gradient-to-t from-sky-950/60 via-sky-900/20 to-transparent text-center">
+              <!-- Bracitos abrazando el orbe -->
+              <path d="M62 142 C66 154, 76 160, 84 156" stroke="#1e40af" stroke-width="11" stroke-linecap="round" fill="none"/>
+              <path d="M124 142 C120 154, 110 160, 102 156" stroke="#1e40af" stroke-width="11" stroke-linecap="round" fill="none"/>
+            </g>
+          </svg>
+          <div class="relative z-10 pb-3.5 pt-8 bg-gradient-to-t from-indigo-950/75 via-indigo-950/25 to-transparent text-center">
             <span class="text-white font-extrabold text-sm sm:text-[15px] tracking-wide drop-shadow">
-              Explorer Ver.
+              Astral Ver.
             </span>
           </div>
         </div>
 
-        <!-- Tarjeta Cuadrada 3 (Abajo Izquierda): Smol Ver. -->
-        <div onclick="openVersionModal('smol')" class="bento-card cursor-pointer rounded-[26px] bg-gradient-to-br from-[#e6f3ff] via-[#ffffff] to-[#d4e9ff] border-[3px] border-white/90 relative overflow-hidden aspect-square flex flex-col justify-between p-3 group shadow-md">
-          <!-- Florecitas / Estrellitas flotantes -->
-          <span class="absolute top-3 left-3 text-pink-300 text-xs animate-twinkle">✿</span>
-          <span class="absolute top-4 right-4 text-sky-400 text-xs animate-twinkle-delay">✦</span>
-          <span class="absolute bottom-8 left-3 text-amber-300 text-xs animate-twinkle">★</span>
+        <!-- Tarjeta Alta 2: Planet Ver. (Mini Planeta Esférico Cozy estilo Petit Planet con rotación y vida) -->
+        <div onclick="playChime('magic'); openVersionModal('planet')" class="bento-card cursor-pointer rounded-[28px] bg-gradient-to-b from-[#3898d8] via-[#67bce8] to-[#a5e1f7] border-[3px] border-white/85 relative overflow-hidden min-h-[245px] sm:min-h-[265px] flex flex-col justify-between group shadow-lg">
+          <svg viewBox="0 0 200 270" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+            <defs>
+              <radialGradient id="planetMeadow" cx="42%" cy="35%" r="65%">
+                <stop offset="0%" stop-color="#d9f99d"/>
+                <stop offset="55%" stop-color="#a3e635"/>
+                <stop offset="100%" stop-color="#4d7c0f"/>
+              </radialGradient>
+              <linearGradient id="pondWater" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#67e8f9"/>
+                <stop offset="100%" stop-color="#0284c7"/>
+              </linearGradient>
+            </defs>
 
-          <!-- Sticker Chibi Smol Ver. abrazando corazón -->
-          <div class="flex-1 flex items-center justify-center pt-1 transition-transform duration-300 group-hover:scale-110">
-            <svg viewBox="0 0 140 135" class="w-28 sm:w-32 h-auto animate-heartbeat">
-              <!-- Corona/Sombrerito mini -->
-              <path d="M52 34 L56 16 L66 24 L74 14 L82 24 L90 16 L88 34 Z" fill="#2c6ec2" stroke="#183b73" stroke-width="2"/>
-              <circle cx="71" cy="26" r="3" fill="#ffe484"/>
-              <!-- Cabello esponjoso -->
-              <path d="M36 68 C32 38, 108 38, 104 68 C108 88, 94 96, 70 96 C46 96, 32 88, 36 68 Z" fill="#dff0ff" stroke="#5a9be6" stroke-width="2.5"/>
-              <!-- Carita -->
-              <ellipse cx="70" cy="68" rx="24" ry="19" fill="#fff3ec"/>
-              <!-- Ojos grandes felices -->
-              <ellipse cx="59" cy="66" rx="4.5" ry="5.5" fill="#1f4e96"/>
-              <ellipse cx="81" cy="66" rx="4.5" ry="5.5" fill="#1f4e96"/>
-              <circle cx="57.5" cy="64" r="1.8" fill="#ffffff"/>
-              <circle cx="79.5" cy="64" r="1.8" fill="#ffffff"/>
-              <!-- Rubor -->
-              <ellipse cx="51" cy="72" rx="4.5" ry="2.2" fill="#ff9eb8" opacity="0.75"/>
-              <ellipse cx="89" cy="72" rx="4.5" ry="2.2" fill="#ff9eb8" opacity="0.75"/>
-              <!-- Corazón pastel gigante abrazado -->
-              <path d="M70 116 C70 116, 46 100, 46 86 C46 78, 53 74, 60 74 C65 74, 68 77, 70 80 C72 77, 75 74, 80 74 C87 74, 94 78, 94 86 C94 100, 70 116, 70 116 Z" fill="#ff9eb8" stroke="#ffffff" stroke-width="2.5"/>
-              <!-- Manitas chibi sobre el corazón -->
-              <circle cx="54" cy="90" r="6" fill="#fff3ec" stroke="#d9a396" stroke-width="1.5"/>
-              <circle cx="86" cy="90" r="6" fill="#fff3ec" stroke="#d9a396" stroke-width="1.5"/>
-            </svg>
+            <!-- Nubes suaves flotando detrás del planeta -->
+            <g class="animate-cloud-glide" opacity="0.7">
+              <ellipse cx="45" cy="56" rx="26" ry="10" fill="#ffffff"/>
+              <circle cx="38" cy="50" r="10" fill="#ffffff"/>
+              <circle cx="52" cy="49" r="12" fill="#ffffff"/>
+            </g>
+            <g class="animate-float-reverse" opacity="0.55">
+              <ellipse cx="162" cy="198" rx="24" ry="9" fill="#ffffff"/>
+              <circle cx="156" cy="192" r="9" fill="#ffffff"/>
+            </g>
+
+            <!-- Asteroides / rocas flotantes orbitando alrededor del planeta -->
+            <g class="animate-float">
+              <polygon points="24,132 34,126 42,135 36,145 22,142" fill="#94a3b8" stroke="#475569" stroke-width="1.2"/>
+              <circle cx="32" cy="133" r="3" fill="#cbd5e1"/>
+            </g>
+            <g class="animate-float-reverse">
+              <polygon points="162,76 174,72 180,82 170,90 158,84" fill="#94a3b8" stroke="#475569" stroke-width="1.2"/>
+            </g>
+            <g class="animate-float">
+              <polygon points="164,166 176,162 182,172 172,180 160,174" fill="#94a3b8" stroke="#475569" stroke-width="1.2"/>
+            </g>
+
+            <!-- PLANETA MINIATURA FLOTANDO -->
+            <g class="animate-float">
+              <!-- Pinos colgando en el polo sur -->
+              <polygon points="74,192 64,226 84,226" fill="#15803d" stroke="#14532d" stroke-width="1.2"/>
+              <polygon points="94,196 82,236 106,236" fill="#166534" stroke="#14532d" stroke-width="1.2"/>
+              <polygon points="118,192 108,228 128,228" fill="#15803d" stroke="#14532d" stroke-width="1.2"/>
+
+              <!-- Esfera principal de pradera -->
+              <circle cx="100" cy="135" r="64" fill="url(#planetMeadow)" stroke="#3f6212" stroke-width="1.8"/>
+
+              <!-- Estanque cristalino con nenúfares y piedras -->
+              <path d="M56 126 C62 112, 86 112, 92 126 C96 138, 86 154, 72 152 C58 150, 50 138, 56 126 Z" fill="url(#pondWater)" stroke="#0369a1" stroke-width="1.4"/>
+              <!-- Nenúfares -->
+              <circle cx="68" cy="128" r="4.5" fill="#bef264"/>
+              <circle cx="68" cy="128" r="2" fill="#f472b6"/>
+              <circle cx="80" cy="140" r="4" fill="#bef264"/>
+              <circle cx="80" cy="140" r="1.8" fill="#fde047"/>
+              <!-- Piedritas alrededor del lago -->
+              <circle cx="56" cy="122" r="4" fill="#cbd5e1" stroke="#64748b" stroke-width="1"/>
+              <circle cx="91" cy="122" r="4.5" fill="#94a3b8" stroke="#64748b" stroke-width="1"/>
+              <circle cx="86" cy="149" r="4" fill="#cbd5e1" stroke="#64748b" stroke-width="1"/>
+
+              <!-- Corralito de madera con ovejitas esponjosas -->
+              <g transform="translate(128, 128) rotate(18)">
+                <polygon points="-16,-14 16,-14 20,12 -18,14" fill="none" stroke="#92400e" stroke-width="2.5" stroke-linejoin="round"/>
+                <!-- Ovejita 1 -->
+                <ellipse cx="-2" cy="-3" rx="7" ry="5" fill="#ffffff" stroke="#94a3b8" stroke-width="1"/>
+                <circle cx="4" cy="-4" r="2.5" fill="#334155"/>
+                <!-- Ovejita 2 -->
+                <ellipse cx="4" cy="6" rx="6" ry="4.5" fill="#ffffff" stroke="#94a3b8" stroke-width="1"/>
+                <circle cx="-2" cy="6" r="2.2" fill="#334155"/>
+              </g>
+
+              <!-- Cabaña Cozy en la cima del planeta -->
+              <g transform="translate(100, 62)">
+                <!-- Chimenea con humito -->
+                <rect x="8" y="-12" width="5" height="10" fill="#b45309"/>
+                <circle cx="11" cy="-17" r="2.5" fill="#ffffff" opacity="0.8" class="animate-twinkle"/>
+                <!-- Paredes madera -->
+                <rect x="-13" y="0" width="26" height="16" rx="2" fill="#d97706" stroke="#78350f" stroke-width="1.4"/>
+                <!-- Puerta y ventanita iluminada -->
+                <rect x="-3" y="6" width="6" height="10" fill="#78350f"/>
+                <rect x="-10" y="5" width="4.5" height="4.5" fill="#fef08a"/>
+                <rect x="5.5" y="5" width="4.5" height="4.5" fill="#fef08a"/>
+                <!-- Tejado terracota -->
+                <polygon points="-17,2 0,-11 17,2" fill="#ea580c" stroke="#7c2d12" stroke-width="1.4" stroke-linejoin="round"/>
+              </g>
+
+              <!-- Árboles low-poly redonditos alrededor -->
+              <g transform="translate(74, 72) rotate(-22)">
+                <rect x="-2" y="0" width="4" height="10" fill="#78350f"/>
+                <circle cx="0" cy="-5" r="9" fill="#65a30d" stroke="#3f6212" stroke-width="1.2"/>
+              </g>
+              <g transform="translate(126, 72) rotate(22)">
+                <rect x="-2" y="0" width="4" height="10" fill="#78350f"/>
+                <circle cx="0" cy="-5" r="9" fill="#84cc16" stroke="#3f6212" stroke-width="1.2"/>
+              </g>
+              <g transform="translate(42, 166) rotate(-125)">
+                <rect x="-2" y="0" width="4" height="10" fill="#78350f"/>
+                <circle cx="0" cy="-5" r="9" fill="#65a30d" stroke="#3f6212" stroke-width="1.2"/>
+              </g>
+              <g transform="translate(158, 162) rotate(120)">
+                <rect x="-2" y="0" width="4" height="10" fill="#78350f"/>
+                <circle cx="0" cy="-5" r="9" fill="#84cc16" stroke="#3f6212" stroke-width="1.2"/>
+              </g>
+            </g>
+          </svg>
+          <div class="relative z-10 pb-3.5 pt-8 bg-gradient-to-t from-sky-950/65 via-sky-950/20 to-transparent text-center">
+            <span class="text-white font-extrabold text-sm sm:text-[15px] tracking-wide drop-shadow">
+              Planet Ver.
+            </span>
           </div>
+        </div>
 
-          <div class="text-center pb-0.5">
-            <span class="text-[#2f74c0] font-black text-xs sm:text-sm tracking-tight bg-white/80 px-2.5 py-0.5 rounded-full shadow-xs">
+        <!-- Tarjeta Cuadrada 3: Smol Ver. (Chibi con coronita y corazón) -->
+        <div onclick="playChime('magic'); openVersionModal('smol')" class="bento-card cursor-pointer rounded-[26px] bg-gradient-to-br from-[#e0f2fe] via-[#f0f9ff] to-[#dbeafe] border-[3px] border-white relative overflow-hidden aspect-square flex flex-col justify-between group shadow-md">
+          <svg viewBox="0 0 180 180" class="w-full h-full p-2 transition-transform duration-300 group-hover:scale-105">
+            <!-- Florecitas pastel flotantes -->
+            <circle cx="34" cy="64" r="5" fill="#fbcfe8"/>
+            <circle cx="148" cy="58" r="5" fill="#fbcfe8"/>
+            <circle cx="38" cy="126" r="4.5" fill="#bae6fd"/>
+            <circle cx="144" cy="124" r="4.5" fill="#bae6fd"/>
+
+            <!-- Cabello chibi esponjoso -->
+            <path d="M44 96 C38 56, 142 56, 136 96 C140 122, 122 136, 90 136 C58 136, 40 122, 44 96 Z" fill="#dbeafe" stroke="#3b82f6" stroke-width="2.2"/>
+            <!-- Carita chibi -->
+            <ellipse cx="90" cy="94" rx="34" ry="26" fill="#fff4ee" stroke="#c98d84" stroke-width="1.8"/>
+            <!-- Rubor -->
+            <ellipse cx="66" cy="100" rx="6.5" ry="3.5" fill="#fb7185" opacity="0.55"/>
+            <ellipse cx="114" cy="100" rx="6.5" ry="3.5" fill="#fb7185" opacity="0.55"/>
+            <!-- Ojos chibi grandes -->
+            <g class="animate-blink">
+              <ellipse cx="75" cy="91" rx="6" ry="7.5" fill="#1d4ed8"/>
+              <ellipse cx="105" cy="91" rx="6" ry="7.5" fill="#1d4ed8"/>
+              <circle cx="73" cy="88" r="2.4" fill="#ffffff"/>
+              <circle cx="103" cy="88" r="2.4" fill="#ffffff"/>
+            </g>
+            <!-- Flequillo -->
+            <path d="M54 88 C58 58, 122 58, 126 88 C114 76, 102 82, 90 70 C78 82, 66 76, 54 88 Z" fill="#ffffff" stroke="#3b82f6" stroke-width="2"/>
+            <!-- Mini sombrero/corona inclinada -->
+            <g transform="rotate(14 114 54)">
+              <ellipse cx="114" cy="62" rx="22" ry="6" fill="#1e3a8a"/>
+              <path d="M98 60 L102 42 L114 48 L126 42 L130 60 Z" fill="#2563eb" stroke="#172554" stroke-width="1.8"/>
+              <circle cx="114" cy="53" r="3" fill="#fde047"/>
+            </g>
+            <!-- Corazón rosado sostenido con manitas -->
+            <path d="M90 126 C90 126, 72 114, 72 104 C72 98, 78 95, 83 98 C86 100, 90 104, 90 104 C90 104, 94 100, 97 98 C102 95, 108 98, 108 104 C108 114, 90 126, 90 126 Z" fill="#fda4af" stroke="#e11d48" stroke-width="1.8" class="animate-heartbeat"/>
+          </svg>
+          <div class="relative z-10 text-center pb-2.5 -mt-6">
+            <span class="text-[#16498a] font-black text-xs sm:text-sm tracking-tight bg-white/85 px-2.5 py-0.5 rounded-full shadow-xs">
               Smol Ver.
             </span>
           </div>
         </div>
 
-        <!-- Tarjeta Cuadrada 4 (Abajo Derecha): VIEW MORE > -->
-        <button onclick="openGalleryModal()" class="blue-bento bento-card cursor-pointer rounded-[26px] p-5 aspect-square flex flex-col justify-between text-left relative overflow-hidden group focus:outline-none">
-          <!-- Brillo decorativo -->
+        <!-- Tarjeta Cuadrada 4: VIEW MORE > (Botón grande azul como en la referencia) -->
+        <button onclick="playChime('soft'); openGalleryModal()" class="blue-bento bento-card shimmer-btn cursor-pointer rounded-[26px] p-5 aspect-square flex flex-col justify-between text-left relative overflow-hidden group focus:outline-none">
           <div class="absolute -right-6 -top-6 w-24 h-24 bg-white/15 rounded-full blur-lg group-hover:scale-125 transition-transform"></div>
 
           <div class="mt-1">
@@ -751,11 +1099,10 @@
               MORE
             </span>
             <span class="text-[11px] font-bold text-sky-100/90 mt-1 block">
-              IG Reels &amp; Edits
+              Posts &amp; Edits IG
             </span>
           </div>
 
-          <!-- Botón circular blanco con flecha azul como en la imagen -->
           <div class="self-end w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white text-[#3a86d6] flex items-center justify-center shadow-md transition-transform duration-300 group-hover:translate-x-1 group-hover:scale-105">
             <i class="fa-solid fa-chevron-right text-xl sm:text-2xl font-black"></i>
           </div>
@@ -772,77 +1119,241 @@
     <span id="toast-msg">¡Copiado al portapapeles!</span>
   </div>
 
-  <!-- MODAL INTERACTIVO PARA GALERÍA IG / VERSIONES / PERFIL -->
-  <div id="modal-overlay" onclick="closeModalOnBg(event)" class="fixed inset-0 z-50 bg-sky-950/60 backdrop-blur-sm hidden items-center justify-center p-4 transition-opacity">
-    <div class="bg-white text-slate-800 rounded-[30px] border-4 border-sky-400 max-w-lg w-full p-6 sm:p-7 shadow-2xl relative animate-[floatSlow_0.35s_ease-out]">
-      <button onclick="closeModal()" aria-label="Cerrar" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-sky-100 hover:bg-sky-200 text-sky-800 flex items-center justify-center font-bold transition-colors">
+  <!-- MODAL INTERACTIVO PARA GALERÍA DE INSTAGRAM / DETALLES DE VARIANTES -->
+  <div id="modal-overlay" onclick="closeModalOnBg(event)" class="fixed inset-0 z-50 bg-sky-950/65 backdrop-blur-sm hidden items-center justify-center p-4 transition-opacity">
+    <div id="modal-card" class="bg-white text-slate-800 rounded-[30px] border-4 border-sky-400 max-w-md w-full p-6 shadow-2xl relative animate-modal-pop">
+      <button onclick="playChime('tap'); closeModal()" aria-label="Cerrar" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-sky-100 hover:bg-sky-200 text-sky-800 flex items-center justify-center font-bold transition-colors z-10">
         <i class="fa-solid fa-xmark"></i>
       </button>
 
-      <div id="modal-body">
-        <!-- Contenido dinámico inyectado por JS -->
-      </div>
+      <div id="modal-body"></div>
     </div>
   </div>
 
   <script>
-    // 1. SLIDES DEL CARRUSEL HERO
+    // =========================================================================
+    // 1. MOTOR DE PARTÍCULAS CÓSMICAS Y ESTRELLAS FUGACES EN CANVAS
+    // =========================================================================
+    (function initCosmicCanvas() {
+      const canvas = document.getElementById('cosmic-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let width = (canvas.width = window.innerWidth);
+      let height = (canvas.height = window.innerHeight);
+
+      const stars = Array.from({ length: 48 }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        r: Math.random() * 2.1 + 0.6,
+        alpha: Math.random(),
+        speed: Math.random() * 0.015 + 0.005,
+        vy: -(Math.random() * 0.18 + 0.05)
+      }));
+
+      let shootingStar = null;
+
+      function spawnShootingStar() {
+        shootingStar = {
+          x: Math.random() * width * 0.8 + width * 0.1,
+          y: Math.random() * height * 0.35,
+          len: Math.random() * 70 + 50,
+          vx: -6.5,
+          vy: 3.2,
+          life: 1
+        };
+      }
+
+      setInterval(() => {
+        if (!shootingStar && Math.random() > 0.35) spawnShootingStar();
+      }, 4200);
+
+      function render() {
+        ctx.clearRect(0, 0, width, height);
+
+        // Estrellitas flotantes suaves
+        for (const s of stars) {
+          s.alpha += s.speed;
+          s.y += s.vy;
+          if (s.y < -10) {
+            s.y = height + 10;
+            s.x = Math.random() * width;
+          }
+          const opacity = 0.25 + Math.abs(Math.sin(s.alpha)) * 0.65;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255, 250, 220, ${opacity})`;
+          ctx.fill();
+        }
+
+        // Estrella fugaz ocasional
+        if (shootingStar) {
+          const grad = ctx.createLinearGradient(
+            shootingStar.x,
+            shootingStar.y,
+            shootingStar.x + shootingStar.len,
+            shootingStar.y - shootingStar.len * 0.5
+          );
+          grad.addColorStop(0, `rgba(255, 244, 180, ${shootingStar.life})`);
+          grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+
+          ctx.strokeStyle = grad;
+          ctx.lineWidth = 2.2;
+          ctx.beginPath();
+          ctx.moveTo(shootingStar.x, shootingStar.y);
+          ctx.lineTo(shootingStar.x + shootingStar.len, shootingStar.y - shootingStar.len * 0.5);
+          ctx.stroke();
+
+          shootingStar.x += shootingStar.vx;
+          shootingStar.y += shootingStar.vy;
+          shootingStar.life -= 0.024;
+          if (shootingStar.life <= 0) shootingStar = null;
+        }
+
+        requestAnimationFrame(render);
+      }
+
+      window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      });
+
+      render();
+    })();
+
+    // =========================================================================
+    // 2. SISTEMA DE MICRO-SONIDOS COZY CON TONE.JS
+    // =========================================================================
+    let soundEnabled = true;
+    let synth = null;
+
+    function toggleSoundEffects() {
+      soundEnabled = !soundEnabled;
+      const icon = document.getElementById('sound-icon');
+      icon.className = soundEnabled ? 'fa-solid fa-volume-high text-xs' : 'fa-solid fa-volume-xmark text-xs opacity-60';
+      showToast(soundEnabled ? '🔔 Sonidos estelares activados' : '🔇 Sonidos silenciados');
+    }
+
+    function playChime(type = 'tap') {
+      if (!soundEnabled || typeof Tone === 'undefined') return;
+      try {
+        if (Tone.context.state !== 'running') {
+          Tone.start();
+        }
+        if (!synth) {
+          synth = new Tone.PolySynth(Tone.Synth, {
+            oscillator: { type: 'sine' },
+            envelope: { attack: 0.01, decay: 0.18, sustain: 0.05, release: 0.35 }
+          }).toDestination();
+          synth.volume.value = -14;
+        }
+        const now = Tone.now();
+        if (type === 'tap') {
+          synth.triggerAttackRelease('G5', '32n', now);
+        } else if (type === 'soft') {
+          synth.triggerAttackRelease(['E5', 'B5'], '16n', now);
+        } else if (type === 'magic') {
+          synth.triggerAttackRelease('C6', '32n', now);
+          synth.triggerAttackRelease('E6', '32n', now + 0.06);
+          synth.triggerAttackRelease('G6', '16n', now + 0.12);
+        }
+      } catch (err) {
+        // Silenciar errores si el navegador bloquea audio antes de interacción
+      }
+    }
+
+    // =========================================================================
+    // 3. EFECTO 3D TILT INTERACTIVO EN TARJETAS BENTO
+    // =========================================================================
+    document.querySelectorAll('.bento-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        card.style.transform = `perspective(700px) rotateX(${(-y * 6).toFixed(2)}deg) rotateY(${(x * 6).toFixed(2)}deg) translateY(-4px)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+      });
+    });
+
+    // =========================================================================
+    // 4. DATOS DEL CARRUSEL DEL BANNER SUPERIOR (HERO)
+    // =========================================================================
     const heroSlides = [
       {
         title: "Hi, Planet Explorers!",
         desc: "Bienvenido a mi pequeño universo. Esta es mi página oficial de creadora de <strong>Petit Planet</strong> en Instagram (<strong>@fhya.planet</strong>). Aquí comparto mis edits cósmicos, decoración de planetas, outfits cozy e iconos estelares."
       },
       {
-        title: "New Cozy Reels ✨",
-        desc: "¡Nuevos tours nocturnos de mi planeta cada viernes! Descubre cómo combinar luces estelares, jardines lunares y cafeterías flotantes en tu propio rincón de Petit Planet."
+        title: "Cozy Galactic Edits ✨",
+        desc: "Todos mis edits y capturas son creados con cariño dentro del universo de <strong>Petit Planet</strong>. ¡Puedes guardar mis iconos pastel y etiquetarme si los usas en tu perfil!"
       },
       {
-        title: "Visit My Planet 🪐",
-        desc: "¿Quieres visitar mi isla o grabar un edit juntos? Usa mi código de exploradora <strong>FHYA-7729-STAR</strong> o envíame un DM en Instagram para coordinar visitas."
+        title: "Join @fhya.planet 🪐",
+        desc: "Comisiones de iconos chibi, presets de color cielo-pastel y tours por islas de seguidores abiertos cada semana en mi cuenta de Instagram."
       }
     ];
 
+    let currentSlide = 0;
+
     function setHeroSlide(index) {
+      currentSlide = index;
+      const contentBox = document.getElementById('hero-slide-content');
       const titleEl = document.getElementById('hero-title');
       const descEl = document.getElementById('hero-desc');
       const dots = document.querySelectorAll('.hero-dot');
 
-      titleEl.style.opacity = '0';
-      descEl.style.opacity = '0';
-
+      contentBox.style.opacity = '0';
       setTimeout(() => {
-        titleEl.textContent = heroSlides[index].title;
+        titleEl.innerHTML = heroSlides[index].title;
         descEl.innerHTML = heroSlides[index].desc;
-        titleEl.style.opacity = '1';
-        descEl.style.opacity = '1';
-      }, 160);
+        contentBox.style.opacity = '1';
+      }, 180);
 
-      dots.forEach((dot, idx) => {
-        if (idx === index) {
-          dot.classList.remove('bg-white/40', 'w-8');
-          dot.classList.add('bg-white', 'w-10');
+      dots.forEach((dot, i) => {
+        if (i === index) {
+          dot.classList.remove('w-8', 'bg-white/40');
+          dot.classList.add('w-10', 'bg-white');
         } else {
-          dot.classList.remove('bg-white', 'w-10');
-          dot.classList.add('bg-white/40', 'w-8');
+          dot.classList.remove('w-10', 'bg-white');
+          dot.classList.add('w-8', 'bg-white/40');
         }
       });
     }
 
-    // Cambio automático suave cada 7 segundos si el usuario no interactúa
-    let currentSlide = 0;
     setInterval(() => {
-      currentSlide = (currentSlide + 1) % heroSlides.length;
-      setHeroSlide(currentSlide);
-    }, 7500);
+      setHeroSlide((currentSlide + 1) % heroSlides.length);
+    }, 6500);
 
-    // 2. RELOJ EN VIVO (Actualizado en tiempo real)
+    // =========================================================================
+    // 5. NAVEGACIÓN DE PESTAÑAS SUPERIORES
+    // =========================================================================
+    function switchTab(tabName, btnEl) {
+      document.querySelectorAll('.nav-pill').forEach(btn => {
+        btn.classList.remove('active', 'bg-sky-400/95', 'font-extrabold', 'shadow-sm');
+        btn.classList.add('text-white/90', 'font-bold');
+      });
+      btnEl.classList.add('active', 'bg-sky-400/95', 'font-extrabold', 'shadow-sm');
+
+      if (tabName === 'home') {
+        setHeroSlide(0);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (tabName === 'about') {
+        document.getElementById('about-section').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else if (tabName === 'edits') {
+        openGalleryModal();
+      }
+    }
+
+    // =========================================================================
+    // 6. RELOJ EN VIVO (FECHA Y HORA REAL)
+    // =========================================================================
     function updateLiveClock() {
       const now = new Date();
       let hours = now.getHours();
       const minutes = String(now.getMinutes()).padStart(2, '0');
       const ampm = hours >= 12 ? 'PM' : 'AM';
-      hours = hours % 12;
-      hours = hours ? hours : 12;
+      hours = hours % 12 || 12;
 
       const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
       const months = ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.'];
@@ -853,70 +1364,55 @@
       document.getElementById('live-date').textContent = `${months[now.getMonth()]} ${now.getFullYear()}`;
     }
     updateLiveClock();
-    setInterval(updateLiveClock, 1000);
+    setInterval(updateLiveClock, 10000);
 
-    // 3. NAVEGACIÓN DE PESTAÑAS SUPERIORES
-    function switchTab(tab, btn) {
-      document.querySelectorAll('.nav-pill').forEach(pill => {
-        pill.classList.remove('bg-sky-400/90', 'font-extrabold', 'shadow-sm');
-        pill.classList.add('text-white/90', 'font-bold');
-      });
-      btn.classList.add('bg-sky-400/90', 'font-extrabold', 'shadow-sm');
-      btn.classList.remove('text-white/90', 'font-bold');
-
-      if (tab === 'home') {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        setHeroSlide(0);
-      } else if (tab === 'about') {
-        document.getElementById('about-section').scrollIntoView({ behavior: 'smooth', block: 'center' });
-      } else if (tab === 'edits') {
-        openGalleryModal();
-      }
-    }
-
-    // 4. NOTIFICACIÓN TOAST Y COPIADO AL PORTAPAPELES
-    let toastTimeout;
+    // =========================================================================
+    // 7. SISTEMA DE NOTIFICACIONES TOAST Y PORTAPAPELES
+    // =========================================================================
     function showToast(message) {
       const toast = document.getElementById('toast');
-      const msgEl = document.getElementById('toast-msg');
-      msgEl.textContent = message;
+      const toastMsg = document.getElementById('toast-msg');
+      toastMsg.textContent = message;
       toast.classList.remove('opacity-0', 'translate-y-2');
       toast.classList.add('opacity-100', 'translate-y-0');
 
-      clearTimeout(toastTimeout);
-      toastTimeout = setTimeout(() => {
+      clearTimeout(window.toastTimer);
+      window.toastTimer = setTimeout(() => {
         toast.classList.add('opacity-0', 'translate-y-2');
         toast.classList.remove('opacity-100', 'translate-y-0');
       }, 2800);
     }
 
-    function copyPlanetID() {
-      const planetId = "FHYA-7729-STAR";
-      const tempInput = document.createElement("input");
-      tempInput.value = planetId;
+    function copyTextFallback(text) {
+      const tempInput = document.createElement('input');
+      tempInput.value = text;
       document.body.appendChild(tempInput);
       tempInput.select();
-      document.execCommand("copy");
+      document.execCommand('copy');
       document.body.removeChild(tempInput);
-      showToast(`🪐 ID de Planeta copiado: ${planetId}`);
+    }
+
+    function copyPlanetID() {
+      const planetCode = 'PETIT-FHYA-1114';
+      copyTextFallback(planetCode);
+      showToast(`🪐 ID de Planeta copiado: ${planetCode}`);
     }
 
     function triggerMascotSparkle() {
-      const phrases = [
-        "✨ ¡Luma dice: Bienvenido a Petit Planet!",
-        "💫 ¡No olvides seguir a @fhya.planet en IG!",
-        "🌙 ¡Hoy hay lluvia de estrellas en el planeta!"
-      ];
-      const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
-      showToast(randomPhrase);
+      showToast('✨ Luma te envía polvo de estrellas de Petit Planet!');
     }
 
-    // 5. MODALES INTERACTIVOS (Versiones, Galería de Instagram y Perfil)
+    function celebrateBirthday() {
+      showToast('🎂 ¡14 de Noviembre! Cumpleaños estelar de FHYA ✨');
+    }
+
+    // =========================================================================
+    // 8. MODALES INTERACTIVOS PARA CONTENIDO DE INSTAGRAM
+    // =========================================================================
     const modalOverlay = document.getElementById('modal-overlay');
     const modalBody = document.getElementById('modal-body');
 
-    function openModal(htmlContent) {
-      modalBody.innerHTML = htmlContent;
+    function openModal() {
       modalOverlay.classList.remove('hidden');
       modalOverlay.classList.add('flex');
     }
@@ -930,135 +1426,291 @@
       if (e.target === modalOverlay) closeModal();
     }
 
-    function openVersionModal(version) {
-      const versionsData = {
-        cozy: {
-          badge: "AESTHETIC SERIES • 01",
-          title: "Cozy Ver. — Starlight Dream",
-          desc: "Mi estética nocturna favorita en Petit Planet. Tonos lavanda, iluminación de faroles lunares y edits suaves con partículas brillantes para reels relajantes.",
-          tags: "#PetitPlanetCozy #FhyaEdits #StarlightAesthetic",
-          likes: "14.2K Likes en IG"
+    function openProfileModal() {
+      modalBody.innerHTML = `
+        <div class="text-center">
+          <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-sky-400 to-indigo-400 mx-auto mb-3 flex items-center justify-center text-3xl shadow-md border-4 border-sky-200 animate-float">
+            🪐
+          </div>
+          <h3 class="text-xl font-black text-sky-900">FHYA • @fhya.planet</h3>
+          <p class="text-xs font-bold text-sky-600 uppercase tracking-wider mt-0.5">Petit Planet Content Creator</p>
+          <p class="text-sm text-slate-600 mt-3 leading-relaxed">
+            ¡Hola! Soy Fhya. Creo edits suaves, guías de decoración de mini-planetas y packs de iconos pastel de <strong>Petit Planet</strong> para toda la comunidad en Instagram.
+          </p>
+          <div class="grid grid-cols-3 gap-2 my-4 bg-sky-50 p-3 rounded-2xl border border-sky-200">
+            <div><span class="block font-black text-sky-900 text-lg">148</span><span class="text-[11px] font-bold text-slate-500">Posts IG</span></div>
+            <div><span class="block font-black text-sky-900 text-lg">24.8K</span><span class="text-[11px] font-bold text-slate-500">Explorers</span></div>
+            <div><span class="block font-black text-sky-900 text-lg">Lv. 50</span><span class="text-[11px] font-bold text-slate-500">Starlight</span></div>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-2">
+            <button onclick="copyTextFallback('@fhya.planet'); showToast('✨ Usuario @fhya.planet copiado!'); closeModal();" class="flex-1 py-2.5 rounded-full bg-gradient-to-r from-sky-500 to-blue-600 text-white font-extrabold text-sm shadow-md hover:opacity-95 transition-opacity">
+              <i class="fa-brands fa-instagram mr-1.5"></i> Copiar @fhya.planet
+            </button>
+            <button onclick="copyPlanetID(); closeModal();" class="py-2.5 px-4 rounded-full bg-sky-100 hover:bg-sky-200 text-sky-800 font-extrabold text-sm transition-colors">
+              ID Juego
+            </button>
+          </div>
+        </div>
+      `;
+      openModal();
+    }
+
+    function openVersionModal(ver) {
+      const data = {
+        astral: {
+          badge: 'Edición Nocturna • @fhya.planet',
+          title: 'Astral Ver. • Guardián del Orbe',
+          emoji: '🌌',
+          likes: '3,842',
+          gradient: 'from-indigo-900 via-blue-800 to-sky-600',
+          desc: 'Inspirado en las noches estrelladas del Bazar Galáctico de Petit Planet. El guardián cósmico protege la semilla de un nuevo planeta mientras flota sobre nubes luminosas.',
+          palette: ['#1e2b6b', '#38bdf8', '#fde047', '#4ade80']
         },
-        explorer: {
-          badge: "ADVENTURE SERIES • 02",
-          title: "Explorer Ver. — Cosmic Voyager",
-          desc: "Outfit oficial de exploración interplanetaria. Ideal para visitar planetas de suscriptores, descubrir flora rara y grabar vlogs de aventuras espaciales.",
-          tags: "#PlanetExplorer #HoyoverseCozy #FhyaPlanet",
-          likes: "18.9K Likes en IG"
+        planet: {
+          badge: 'Diorama Cozy • @fhya.planet',
+          title: 'Planet Ver. • Starlight Cove',
+          emoji: '🪐',
+          likes: '5,210',
+          gradient: 'from-sky-500 via-cyan-400 to-lime-300',
+          desc: 'Mi planeta personal decorado en Petit Planet con cabaña de madera cálida, estanque con nenúfares rosados, corralito de ovejas y asteroides orbitales.',
+          palette: ['#3898d8', '#a3e635', '#ea580c', '#67e8f9']
         },
         smol: {
-          badge: "CHIBI & ICONS • 03",
-          title: "Smol Ver. — Sticker & Icon Pack",
-          desc: "¡Versiones chibi súper tiernas! Dibujo y edito iconos gratuitos para fotos de perfil de la comunidad de Petit Planet. Revisa mis historias destacadas en IG.",
-          tags: "#ChibiArt #PetitPlanetIcons #SmolFhya",
-          likes: "22.5K Likes en IG"
+          badge: 'Icono Libre • @fhya.planet',
+          title: 'Smol Ver. • Chibi Luma Heart',
+          emoji: '🧸',
+          likes: '4,690',
+          gradient: 'from-sky-200 via-blue-100 to-indigo-200',
+          desc: 'Ilustración chibi pensada para foto de perfil o matching icons en Instagram. ¡Si la usas no olvides etiquetar a @fhya.planet en tu bio!',
+          palette: ['#dbeafe', '#3b82f6', '#fda4af', '#fde047']
         }
-      };
+      }[ver];
 
-      const data = versionsData[version];
-      openModal(`
-        <span class="inline-block text-[11px] font-extrabold tracking-widest uppercase bg-sky-100 text-sky-700 px-3 py-1 rounded-full mb-2">
-          ${data.badge}
-        </span>
-        <h4 class="text-2xl font-black text-[#16498a] mb-2">${data.title}</h4>
-        <p class="text-sm text-slate-600 leading-relaxed mb-4">${data.desc}</p>
-        <div class="bg-sky-50 rounded-2xl p-3.5 border border-sky-200 flex items-center justify-between mb-4">
-          <span class="text-xs font-bold text-sky-800">${data.tags}</span>
-          <span class="text-xs font-extrabold text-pink-500">♥ ${data.likes}</span>
-        </div>
-        <div class="flex gap-2.5">
-          <button onclick="showToast('📸 Abriendo @fhya.planet en Instagram...'); closeModal();" class="flex-1 bg-[#418fde] hover:bg-[#2c75c4] text-white font-extrabold py-2.5 px-4 rounded-xl text-sm transition-colors">
-            <i class="fa-brands fa-instagram mr-1.5"></i> Ver Post en IG
+      const swatches = data.palette.map(hex => `<span class="w-5 h-5 rounded-full border-2 border-white shadow-xs" style="background:${hex}" title="${hex}"></span>`).join('');
+
+      modalBody.innerHTML = `
+        <div class="text-center">
+          <div class="w-full h-28 rounded-2xl bg-gradient-to-r ${data.gradient} mb-4 flex items-center justify-center relative overflow-hidden shadow-inner">
+            <span class="text-5xl animate-float">${data.emoji}</span>
+            <span class="absolute bottom-2 right-3 bg-black/35 backdrop-blur-xs text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full">
+              ♥ ${data.likes}
+            </span>
+          </div>
+          <span class="inline-block text-[11px] font-extrabold uppercase tracking-wider bg-sky-100 text-sky-700 px-3 py-1 rounded-full mb-1.5">
+            ${data.badge}
+          </span>
+          <h3 class="text-xl font-black text-sky-900">${data.title}</h3>
+          <p class="text-sm text-slate-600 mt-2.5 leading-relaxed">${data.desc}</p>
+          <div class="flex items-center justify-center gap-2 mt-3.5">
+            <span class="text-[11px] font-bold text-slate-400 uppercase">Paleta:</span>
+            ${swatches}
+          </div>
+          <button onclick="copyTextFallback('@fhya.planet'); showToast('✨ Crédito @fhya.planet copiado'); closeModal();" class="mt-5 w-full py-2.5 rounded-full bg-sky-500 hover:bg-sky-600 text-white font-extrabold text-sm shadow-md transition-colors">
+            Usar Icono &amp; Dar Crédito (@fhya.planet)
           </button>
-          <button onclick="closeModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 px-4 rounded-xl text-sm">
-            Cerrar
-          </button>
         </div>
-      `);
+      `;
+      openModal();
     }
 
     function openGalleryModal() {
-      openModal(`
-        <div class="flex items-center gap-2 mb-1">
-          <span class="text-lg">🪐</span>
-          <span class="text-xs font-extrabold uppercase tracking-wider text-sky-600">@fhya.planet • Instagram Feed</span>
-        </div>
-        <h4 class="text-2xl font-black text-[#16498a] mb-3">Últimos Edits &amp; Reels</h4>
-        <div class="grid grid-cols-2 gap-3 mb-4">
-          <div class="rounded-2xl bg-gradient-to-br from-sky-400 to-indigo-500 p-3.5 text-white flex flex-col justify-between h-32 shadow-sm">
-            <span class="text-[10px] font-extrabold bg-white/20 self-start px-2 py-0.5 rounded-full">REEL • 45K</span>
+      modalBody.innerHTML = `
+        <div>
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-9 h-9 rounded-full bg-gradient-to-tr from-sky-500 to-indigo-500 text-white flex items-center justify-center shadow-xs"><i class="fa-brands fa-instagram"></i></span>
             <div>
-              <p class="font-extrabold text-sm leading-tight">Tour por mi Planeta Pastel ✨</p>
-              <span class="text-[11px] text-sky-100">Hace 2 días</span>
+              <h3 class="text-lg font-black text-sky-900 leading-none">Edits &amp; Reels Recientes</h3>
+              <span class="text-xs font-bold text-sky-600">@fhya.planet • Petit Planet</span>
             </div>
           </div>
-          <div class="rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-400 p-3.5 text-white flex flex-col justify-between h-32 shadow-sm">
-            <span class="text-[10px] font-extrabold bg-white/20 self-start px-2 py-0.5 rounded-full">EDIT • 31K</span>
-            <div>
-              <p class="font-extrabold text-sm leading-tight">Velocity Edit: Lluvia de Estrellas</p>
-              <span class="text-[11px] text-sky-100">Hace 5 días</span>
+          <div class="grid grid-cols-2 gap-3 my-4">
+            <div onclick="playChime('tap'); openVersionModal('astral')" class="cursor-pointer bg-indigo-50 hover:bg-indigo-100 transition-colors p-3.5 rounded-2xl border border-indigo-200 text-center group">
+              <div class="text-2xl mb-1 group-hover:scale-110 transition-transform">🌌</div>
+              <p class="font-extrabold text-xs text-indigo-950">Astral Guardian Edit</p>
+              <span class="text-[10px] text-indigo-600 font-bold">♥ 3.8K likes</span>
+            </div>
+            <div onclick="playChime('tap'); openVersionModal('planet')" class="cursor-pointer bg-sky-50 hover:bg-sky-100 transition-colors p-3.5 rounded-2xl border border-sky-200 text-center group">
+              <div class="text-2xl mb-1 group-hover:scale-110 transition-transform">🪐</div>
+              <p class="font-extrabold text-xs text-sky-950">Tour Starlight Cove</p>
+              <span class="text-[10px] text-sky-600 font-bold">♥ 5.2K likes</span>
+            </div>
+            <div onclick="playChime('tap'); openVersionModal('smol')" class="cursor-pointer bg-amber-50 hover:bg-amber-100 transition-colors p-3.5 rounded-2xl border border-amber-200 text-center group">
+              <div class="text-2xl mb-1 group-hover:scale-110 transition-transform">🧸</div>
+              <p class="font-extrabold text-xs text-amber-950">Pack Icons Chibi</p>
+              <span class="text-[10px] text-amber-600 font-bold">♥ 4.6K likes</span>
+            </div>
+            <div onclick="playChime('magic'); copyPlanetID(); closeModal();" class="cursor-pointer bg-emerald-50 hover:bg-emerald-100 transition-colors p-3.5 rounded-2xl border border-emerald-200 text-center group">
+              <div class="text-2xl mb-1 group-hover:scale-110 transition-transform">🌱</div>
+              <p class="font-extrabold text-xs text-emerald-950">Código Isla Cozy</p>
+              <span class="text-[10px] text-emerald-600 font-bold">Copiar ID Juego</span>
             </div>
           </div>
-          <div class="rounded-2xl bg-gradient-to-br from-indigo-400 to-purple-400 p-3.5 text-white flex flex-col justify-between h-32 shadow-sm">
-            <span class="text-[10px] font-extrabold bg-white/20 self-start px-2 py-0.5 rounded-full">GUÍA • 28K</span>
-            <div>
-              <p class="font-extrabold text-sm leading-tight">Ideas Cozy para tu Cafetería</p>
-              <span class="text-[11px] text-sky-100">Hace 1 semana</span>
-            </div>
-          </div>
-          <div class="rounded-2xl bg-gradient-to-br from-sky-500 to-teal-400 p-3.5 text-white flex flex-col justify-between h-32 shadow-sm">
-            <span class="text-[10px] font-extrabold bg-white/20 self-start px-2 py-0.5 rounded-full">ICONS • 52K</span>
-            <div>
-              <p class="font-extrabold text-sm leading-tight">Pack de Iconos Chibi Gratis</p>
-              <span class="text-[11px] text-sky-100">Destacado</span>
-            </div>
-          </div>
-        </div>
-        <div class="flex flex-col sm:flex-row gap-2.5">
-          <button onclick="copyPlanetID(); closeModal();" class="flex-1 bg-sky-100 hover:bg-sky-200 text-[#16498a] font-extrabold py-2.5 px-4 rounded-xl text-xs sm:text-sm transition-colors">
-            <i class="fa-solid fa-copy mr-1.5"></i> Copiar ID: FHYA-7729-STAR
-          </button>
-          <button onclick="showToast('✨ Redirigiendo a @fhya.planet...'); closeModal();" class="flex-1 bg-[#418fde] hover:bg-[#2b74c2] text-white font-extrabold py-2.5 px-4 rounded-xl text-xs sm:text-sm transition-colors">
-            <i class="fa-brands fa-instagram mr-1.5"></i> Seguir en Instagram
+          <button onclick="playChime('magic'); copyPlanetID(); closeModal();" class="w-full py-2.5 rounded-full bg-gradient-to-r from-sky-500 to-blue-600 hover:opacity-95 text-white font-extrabold text-xs sm:text-sm shadow-md transition-all">
+            Visitar mi Planeta en el juego (Copiar ID)
           </button>
         </div>
-      `);
+      `;
+      openModal();
     }
 
     function openSocialModal(type) {
-      if (type === 'instagram') {
-        openModal(`
+      if (type === 'dm') {
+        modalBody.innerHTML = `
           <div class="text-center">
-            <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-amber-400 via-pink-500 to-purple-600 text-white text-3xl flex items-center justify-center mx-auto mb-3 shadow-md">
-              <i class="fa-brands fa-instagram"></i>
+            <div class="w-12 h-12 rounded-full bg-sky-100 text-sky-600 flex items-center justify-center text-xl mx-auto mb-2">
+              <i class="fa-solid fa-paper-plane"></i>
             </div>
-            <h4 class="text-2xl font-black text-[#16498a]">@fhya.planet</h4>
-            <p class="text-xs font-bold text-sky-600 mb-3">Petit Planet Content Creator • Edits &amp; Cozy Decor</p>
-            <p class="text-sm text-slate-600 mb-5">
-              ¡Únete a nuestra comunidad cósmica en Instagram! Subo reels de decoración, transiciones estéticas y visitas a planetas de seguidores.
-            </p>
-            <button onclick="showToast('📸 ¡Gracias por visitar @fhya.planet!'); closeModal();" class="w-full bg-[#418fde] hover:bg-[#2c75c4] text-white font-extrabold py-3 rounded-2xl shadow-md transition-colors">
-              Abrir Perfil de Instagram
-            </button>
-          </div>
-        `);
-      } else {
-        openModal(`
-          <h4 class="text-xl font-black text-[#16498a] mb-1">Enviar Mensaje / Collab 💌</h4>
-          <p class="text-xs text-slate-500 mb-4">¿Quieres colaborar o invitarme a visitar tu planeta en Petit Planet?</p>
-          <form onsubmit="event.preventDefault(); showToast('✨ ¡Mensaje enviado a FHYA!'); closeModal();" class="space-y-3">
-            <input type="text" required placeholder="Tu usuario de IG o ID de Petit Planet" class="w-full px-3.5 py-2.5 rounded-xl border-2 border-sky-200 focus:border-sky-400 focus:outline-none text-sm" />
-            <textarea rows="3" required placeholder="Escribe tu mensaje cozy aquí..." class="w-full px-3.5 py-2.5 rounded-xl border-2 border-sky-200 focus:border-sky-400 focus:outline-none text-sm"></textarea>
-            <button type="submit" class="w-full bg-[#418fde] hover:bg-[#2c75c4] text-white font-extrabold py-2.5 rounded-xl text-sm transition-colors">
+            <h3 class="text-lg font-black text-sky-900">Enviar saludo a FHYA</h3>
+            <p class="text-xs text-slate-500 mb-3">Deja un mensajito estelar para @fhya.planet</p>
+            <input id="dm-input" type="text" placeholder="¡Me encantan tus edits de Petit Planet! ✨" class="w-full px-4 py-2.5 rounded-2xl border-2 border-sky-200 focus:border-sky-400 focus:outline-none text-sm mb-3">
+            <button onclick="sendQuickDM()" class="w-full py-2.5 rounded-full bg-sky-500 hover:bg-sky-600 text-white font-extrabold text-sm shadow-md">
               Enviar Mensaje Estelar
             </button>
-          </form>
-        `);
+          </div>
+        `;
+        openModal();
       }
     }
 
-    function openProfileModal() {
-      openSocialModal('instagram');
+    function sendQuickDM() {
+      const input = document.getElementById('dm-input');
+      const val = input ? input.value.trim() : '';
+      if (!val) {
+        showToast('✍️ Escribe un mensajito primero');
+        return;
+      }
+      playChime('magic');
+      closeModal();
+      showToast('💌 ¡Mensaje enviado a la bandeja estelar de FHYA!');
+    }
+
+    // 6. REPRODUCTOR DE MÚSICA COZY (MELODÍAS TONE.JS + SOPORTE PARA MP3 PROPIO)
+    let isPlayingMusic = false;
+    let musicMode = 'synth'; // 'synth' o 'custom'
+    let currentPresetIndex = 0;
+    let synthLoop = null;
+    let cozySynth = null;
+    const customAudioPlayer = new Audio();
+    customAudioPlayer.loop = true;
+
+    const cosmicTracks = [
+      {
+        name: 'Starlight Lullaby • Petit Planet OST',
+        tempo: 78,
+        notes: ['C5', 'E5', 'G5', 'B5', 'A5', 'G5', 'E5', 'D5', 'F5', 'A5', 'C6', 'B5', 'G5', 'E5', 'D5', 'G4']
+      },
+      {
+        name: 'Cloudy Meadow Breeze • Ghibli Vibe',
+        tempo: 72,
+        notes: ['F4', 'A4', 'C5', 'E5', 'D5', 'C5', 'A4', 'G4', 'Bb4', 'D5', 'F5', 'E5', 'C5', 'A4', 'G4', 'C5']
+      },
+      {
+        name: 'Galactic Bazaar • Night Walk',
+        tempo: 84,
+        notes: ['E5', 'B4', 'G4', 'B4', 'F#5', 'B4', 'A4', 'B4', 'G5', 'F#5', 'E5', 'D5', 'B4', 'D5', 'E5', 'G5']
+      }
+    ];
+
+    function updateMusicUI(playing) {
+      const icon = document.getElementById('music-play-icon');
+      const vinyl = document.getElementById('vinyl-disc');
+      const eq = document.getElementById('music-eq');
+
+      if (playing) {
+        icon.classList.remove('fa-play', 'ml-0.5');
+        icon.classList.add('fa-pause');
+        vinyl.classList.remove('vinyl-paused');
+        eq.classList.remove('opacity-40');
+        eq.classList.add('opacity-100');
+      } else {
+        icon.classList.remove('fa-pause');
+        icon.classList.add('fa-play', 'ml-0.5');
+        vinyl.classList.add('vinyl-paused');
+        eq.classList.remove('opacity-100');
+        eq.classList.add('opacity-40');
+      }
+    }
+
+    async function startSynthMusic() {
+      await Tone.start();
+      if (!cozySynth) {
+        const reverb = new Tone.Reverb({ decay: 3.2, wet: 0.45 }).toDestination();
+        cozySynth = new Tone.PolySynth(Tone.Synth, {
+          oscillator: { type: 'sine' },
+          envelope: { attack: 0.08, decay: 0.4, sustain: 0.25, release: 1.4 }
+        }).connect(reverb);
+        cozySynth.volume.value = -10;
+      }
+
+      if (synthLoop) {
+        synthLoop.dispose();
+      }
+
+      const track = cosmicTracks[currentPresetIndex];
+      Tone.Transport.bpm.value = track.tempo;
+      let step = 0;
+
+      synthLoop = new Tone.Loop((time) => {
+        const note = track.notes[step % track.notes.length];
+        cozySynth.triggerAttackRelease(note, '8n', time);
+        step++;
+      }, '8n').start(0);
+
+      Tone.Transport.start();
+    }
+
+    function stopAllMusic() {
+      Tone.Transport.stop();
+      customAudioPlayer.pause();
+      isPlayingMusic = false;
+      updateMusicUI(false);
+    }
+
+    async function toggleMusic() {
+      if (isPlayingMusic) {
+        stopAllMusic();
+        showToast('⏸️ Música pausada');
+      } else {
+        if (musicMode === 'custom' && customAudioPlayer.src) {
+          await customAudioPlayer.play();
+        } else {
+          await startSynthMusic();
+        }
+        isPlayingMusic = true;
+        updateMusicUI(true);
+        showToast(`🎵 Sonando: ${document.getElementById('track-title').textContent}`);
+      }
+    }
+
+    async function switchPresetTrack() {
+      musicMode = 'synth';
+      customAudioPlayer.pause();
+      currentPresetIndex = (currentPresetIndex + 1) % cosmicTracks.length;
+      const track = cosmicTracks[currentPresetIndex];
+      document.getElementById('track-title').textContent = track.name;
+
+      if (isPlayingMusic) {
+        await startSynthMusic();
+      }
+      showToast(`🎶 Pista: ${track.name}`);
+    }
+
+    async function loadCustomAudio(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      Tone.Transport.stop();
+      const fileUrl = URL.createObjectURL(file);
+      customAudioPlayer.src = fileUrl;
+      musicMode = 'custom';
+
+      const cleanName = file.name.replace(/\.[^/.]+$/, '');
+      document.getElementById('track-title').textContent = `${cleanName} • Custom Track`;
+
+      await customAudioPlayer.play();
+      isPlayingMusic = true;
+      updateMusicUI(true);
+      showToast(`🎧 Reproduciendo tu canción: ${cleanName}`);
     }
   </script>
 </body>
